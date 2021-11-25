@@ -14,6 +14,7 @@ TagManager:
   - Score
   - Health
   - CoinsText
+  - PlayerBullet
   layers:
   - Default
   - TransparentFX

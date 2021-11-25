@@ -22,7 +22,8 @@ public class StandardBullet : MonoBehaviour
     {
         if(other.tag == "Enemy")
         {
-            Destroy(other.gameObject);
+            
+           // Destroy(other.gameObject);
             Destroy(this.gameObject);
         }
     }
