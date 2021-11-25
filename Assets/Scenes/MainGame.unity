@@ -602,6 +602,7 @@ MonoBehaviour:
   _waves:
   - {fileID: 11400000, guid: 64384f6a2a8fc07448a6fe387e4cf551, type: 2}
   - {fileID: 11400000, guid: 64384f6a2a8fc07448a6fe387e4cf551, type: 2}
+  - {fileID: 11400000, guid: 64384f6a2a8fc07448a6fe387e4cf551, type: 2}
   _spawnPoint: {fileID: 1604279049}
   _spawnDelay: 0.5
   _routes:
