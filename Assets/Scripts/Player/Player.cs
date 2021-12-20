@@ -76,7 +76,7 @@ public class Player : MonoBehaviour
             _renderer.gameObject.SetActive(false);
         }
 
-        float clampedYPos = Mathf.Clamp(transform.position.y, -7.7f, 1.3f);
+        float clampedYPos = Mathf.Clamp(transform.position.y, -6.2f, 3.0f);
         float clampedXpos = Mathf.Clamp(transform.position.x, -3.3f, 3.8f);
         transform.position = new Vector3(clampedXpos, clampedYPos, 0);
 

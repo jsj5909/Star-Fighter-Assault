@@ -26,13 +26,16 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private Wave[] _waves;
     [SerializeField] private Transform _spawnPoint;
     [SerializeField] private double _spawnDelay = 1;
-    [SerializeField] private EnemyRoute [] _routes;
+    [SerializeField] private EnemyRoute [] _topRoutes;
+    [SerializeField] private EnemyRoute[] _bottomRoutes;
 
     private int _currentWave = 0;
     private int _currentEnemy = 0;
-    private int _spawnCount = 0;
+    private int _topSpawnCount = 0;
+    private int _bottomSpawnCount = 0;
 
-    private EnemyRoute _currentRoute;
+    private EnemyRoute _currentTopRoute;
+    private EnemyRoute _currentBottomRoute;
 
     private bool _spawningComplete = false;
     private bool _waveComplete = false;
@@ -59,7 +62,8 @@ public class WaveManager : MonoBehaviour
             Debug.LogError("Director is null");
 
 
-        _currentRoute = _routes[(Random.Range(0, _routes.Length))];
+        _currentTopRoute = _topRoutes[(Random.Range(0, _topRoutes.Length))];
+        _currentBottomRoute = _bottomRoutes[(Random.Range(0, _bottomRoutes.Length))];
     }
 
     // Update is called once per frame
@@ -75,7 +79,7 @@ public class WaveManager : MonoBehaviour
             return;
         }
 
-        if(kills >= _waves[_currentWave].enemies.Length )
+        if(kills >= (_waves[_currentWave].topEnemies.Length + _waves[_currentWave].bottomEnemies.Length ))
         {
             StartNextWave();
         }
@@ -88,19 +92,31 @@ public class WaveManager : MonoBehaviour
         //Debug.Log("TimeLine Time: " + time);
         if (_currentWave < _waves.Length)
         {
-
-            if (_spawnCount < _waves[_currentWave].enemies.Length)
+            if (_director.time > _nextSpawnTime)
             {
-                if (_director.time > _nextSpawnTime)
+                if (_topSpawnCount < _waves[_currentWave].topEnemies.Length)
                 {
-                   //GameObject enemy =  Instantiate(_waves[_currentWave].enemies[_currentEnemy], _spawnPoint.position, Quaternion.identity);
-                  Instantiate(_waves[_currentWave].enemies[_currentEnemy], _spawnPoint.position, Quaternion.identity).GetComponent<Enemy>().route = _currentRoute;
-                    _nextSpawnTime = _director.time + _spawnDelay;
-                    _currentEnemy++;
-                    _spawnCount++;
 
-                   // Debug.Log("Spawn Count: " + _spawnCount + " Time: " + _director.time + " next Spawn: " + _nextSpawnTime);
+                    //GameObject enemy =  Instantiate(_waves[_currentWave].enemies[_currentEnemy], _spawnPoint.position, Quaternion.identity);
+                    Instantiate(_waves[_currentWave].topEnemies[_currentEnemy], _spawnPoint.position, Quaternion.identity).GetComponent<Enemy>().route = _currentTopRoute;
+                   
+                   
+                    _topSpawnCount++;
+
+                    // Debug.Log("Spawn Count: " + _spawnCount + " Time: " + _director.time + " next Spawn: " + _nextSpawnTime);
+
+
+
                 }
+                if (_bottomSpawnCount < _waves[_currentWave].bottomEnemies.Length)
+                {
+                    Instantiate(_waves[_currentWave].bottomEnemies[_currentEnemy], _spawnPoint.position, Quaternion.identity).GetComponent<Enemy>().route = _currentBottomRoute;
+                    //_nextSpawnTime = _director.time + _spawnDelay;
+                   
+                    _bottomSpawnCount++;
+                }
+                _nextSpawnTime = _director.time + _spawnDelay;
+                _currentEnemy++;
 
             }
         }
@@ -113,10 +129,12 @@ public class WaveManager : MonoBehaviour
         _waveComplete = true;
         _currentWave++;
         _currentEnemy = 0;
-        _spawnCount = 0;
+        _topSpawnCount = 0;
+        _bottomSpawnCount = 0;
         kills = 0;
 
-        _currentRoute = _routes[Random.Range(0, _routes.Length)];
+        _currentTopRoute = _topRoutes[(Random.Range(0, _topRoutes.Length))];
+        _currentBottomRoute = _bottomRoutes[(Random.Range(0, _bottomRoutes.Length))];
 
         Debug.Log("Wave Complete");
 

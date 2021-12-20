@@ -10,14 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7ddbd568e28ef545af3b861660c4e0d, type: 3}
-  m_Name: Route3
+  m_Name: Route5
   m_EditorClassIdentifier: 
   waypoints:
-  - {fileID: 5260732967187148176, guid: 5b5b4f610445aa942b0f2f12147999ab, type: 3}
-  - {fileID: 3050580876801108995, guid: 6f421b09703ac344785e91a13b2efad8, type: 3}
-  - {fileID: 123081845677657893, guid: 54dc061f1b11f5c4ead476d91e302b7d, type: 3}
-  - {fileID: 332534458971370300, guid: 965420cc808536c4fafe103369fab3de, type: 3}
-  - {fileID: 5479921130110890986, guid: b57a621a449063242a557a7321a96574, type: 3}
-  - {fileID: 2815703130591343710, guid: 6279d05ba68ef2b459a9aa017b549bb1, type: 3}
   - {fileID: 3757740074574058868, guid: 17a5a31f918df10438971f0194f5d0ea, type: 3}
+  - {fileID: 2815703130591343710, guid: 6279d05ba68ef2b459a9aa017b549bb1, type: 3}
+  - {fileID: 5479921130110890986, guid: b57a621a449063242a557a7321a96574, type: 3}
+  - {fileID: 3699431641929260035, guid: 3978437ea7c259f44bd50ca718a0ef62, type: 3}
+  - {fileID: 1774748319703877203, guid: 7821ce567063a5244a4d525de667ab1a, type: 3}
   - {fileID: 1392181680437459475, guid: a86e1bb80395c2c47a11043b22bcb816, type: 3}
