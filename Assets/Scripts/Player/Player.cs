@@ -83,4 +83,13 @@ public class Player : MonoBehaviour
 
 
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Enemy")
+        {
+            //harm player
+            //if player health - 0 then destroy
+        }
+    }
 }

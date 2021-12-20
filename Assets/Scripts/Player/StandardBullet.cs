@@ -25,6 +25,7 @@ public class StandardBullet : MonoBehaviour
             
            // Destroy(other.gameObject);
             Destroy(this.gameObject);
+            //do this on player
         }
 
         if(other.tag == "Border")

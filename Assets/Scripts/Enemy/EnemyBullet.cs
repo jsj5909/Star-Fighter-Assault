@@ -34,7 +34,7 @@ public class EnemyBullet : MonoBehaviour
         if(other.tag == "Player")
         {
             //harm player
-
+            //do this on player
         }
         BulletDeath();
        
