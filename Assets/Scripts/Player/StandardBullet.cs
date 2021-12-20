@@ -26,5 +26,10 @@ public class StandardBullet : MonoBehaviour
            // Destroy(other.gameObject);
             Destroy(this.gameObject);
         }
+
+        if(other.tag == "Border")
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

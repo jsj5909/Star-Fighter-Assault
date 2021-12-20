@@ -12,7 +12,7 @@ public class WaveManager : MonoBehaviour
     {
         get
         {
-            if(_instance == null)
+            if (_instance == null)
             {
                 Debug.LogError("Can't find WaveManager instance");
             }
@@ -21,18 +21,23 @@ public class WaveManager : MonoBehaviour
         }
     }
 
-    
-    
+
+
     [SerializeField] private Wave[] _waves;
     [SerializeField] private Transform _spawnPoint;
     [SerializeField] private double _spawnDelay = 1;
-    [SerializeField] private EnemyRoute [] _topRoutes;
+    [SerializeField] private EnemyRoute[] _topRoutes;
     [SerializeField] private EnemyRoute[] _bottomRoutes;
+
+   
+
+
 
     private int _currentWave = 0;
     private int _currentEnemy = 0;
     private int _topSpawnCount = 0;
     private int _bottomSpawnCount = 0;
+
 
     private EnemyRoute _currentTopRoute;
     private EnemyRoute _currentBottomRoute;
@@ -43,6 +48,8 @@ public class WaveManager : MonoBehaviour
     private double _nextSpawnTime = -1;
 
     public int kills { get; set; } = 0;
+    public int maxBullets { get; set; } = 3;
+    public int currentBullets { get; set; } = 0;
 
     private PlayableDirector _director;
 
