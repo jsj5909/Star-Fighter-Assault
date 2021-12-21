@@ -407,7 +407,10 @@ MonoBehaviour:
   _speed: 5
   _renderer: {fileID: 1849466795}
   _weaponCoolDown: 0.5
-  _standardBullet: {fileID: 1265320858387660729, guid: 5ab1a2fba5cf66b47b924f46ac877e10, type: 3}
+  mainGunObjects:
+  - {fileID: 1265320858387660729, guid: 5ab1a2fba5cf66b47b924f46ac877e10, type: 3}
+  - {fileID: 3520822517703225537, guid: ab38f3da44e11e641965c2d065fcecef, type: 3}
+  - {fileID: 4169661962276223698, guid: 7ebde65738b935a4ea2ad4168398293f, type: 3}
 --- !u!65 &466082106
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -809,7 +812,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 26e49028e8ca50342991faca473f4a34, type: 2}
   - {fileID: 11400000, guid: 5e4aa5a66611ff54cb044c4ee549a24b, type: 2}
   - {fileID: 11400000, guid: 5634904b7f1599641a5fb7377bc9d18d, type: 2}
-  maxBullets: 5
 --- !u!4 &1252849765
 Transform:
   m_ObjectHideFlags: 0

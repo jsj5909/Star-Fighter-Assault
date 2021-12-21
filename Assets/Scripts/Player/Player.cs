@@ -8,9 +8,12 @@ public class Player : MonoBehaviour
     [SerializeField] private float _speed;
     [SerializeField] private SpriteRenderer _renderer;
     [SerializeField] private float _weaponCoolDown = 0.5f;
+    [SerializeField] private GameObject[] mainGunObjects;
 
-    //bullets
-    [SerializeField] private GameObject _standardBullet;
+  
+
+    private int upgradeLevel = 2;
+    
 
     private Animator _animator;
 
@@ -33,19 +36,25 @@ public class Player : MonoBehaviour
     {
         Movement();
 
-        if(Input.GetKey(KeyCode.Space))
+        FireWeapon();
+    }
+
+    private void FireWeapon()
+    {
+        if (Input.GetKey(KeyCode.Space))
         {
-           
-            if(Time.time > _nextFireTime)
+
+            if (Time.time > _nextFireTime)
             {
+
                 Debug.Log("Fire");
 
                 _nextFireTime = Time.time + _weaponCoolDown;
 
-                Instantiate(_standardBullet, transform.position + Vector3.right, Quaternion.identity);
+                Instantiate(mainGunObjects[upgradeLevel], transform.position + Vector3.right, Quaternion.identity);
 
             }
-        }    
+        }
     }
 
     private void Movement()
