@@ -11,18 +11,24 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] GameObject _bullet;
 
-    private GameObject _player;
+    [SerializeField] GameObject _powerUp;
+
+    [SerializeField] private int _health;
+
+    private Player _player;
    
     private float _nextShootTime = -1;
 
+    private int _currentWaypoint = 0;
+
+
+
     public EnemyRoute route { get; set; }
 
-    private int _currentWaypoint = 0;
-    
     // Start is called before the first frame update
     void Start()
     {
-        _player = GameObject.Find("Player");
+        _player = FindObjectOfType<Player>();
         if (_player == null)
             Debug.LogError("Player is null");
     }
@@ -38,10 +44,7 @@ public class Enemy : MonoBehaviour
 
         if(Time.time > _nextShootTime && (Vector3.Distance(_player.transform.position,transform.position) < 5.0f) && currentBullets<maxBullets)
         {
-            //shoot
-            //reset timer
-            // Vector3 direction = (_player.transform.position - transform.position).normalized;
-            
+           
            Instantiate(_bullet, transform.position, Quaternion.identity);
             _nextShootTime = Time.time + _weaponCoolDown;
 
@@ -75,11 +78,37 @@ public class Enemy : MonoBehaviour
     {
         if(other.tag == "PlayerBullet" || other.tag == "Player")
         {
-            WaveManager.Instance.kills++;
-            Destroy(this.gameObject);
+            _health--;
+            if (_health <= 0)
+            {
+                WaveManager.Instance.kills++;
+
+                SpawnPowerUp();
+
+                Destroy(this.gameObject);
+            }
         }
 
     }
 
+    private void SpawnPowerUp()
+    {
+        float upgradeChance = Random.Range(1, 10);
+        
+        if(_player.upgradeLevel < 2)
+        { 
+            if(upgradeChance < 5)
+            {
+                Instantiate(_powerUp, transform.position, Quaternion.identity);
+            }
+        }
+        else
+        {
+            if (upgradeChance < 5)
+            {
+                Instantiate(_powerUp, transform.position, Quaternion.identity);
+            }
+        }
+    }
 
 }

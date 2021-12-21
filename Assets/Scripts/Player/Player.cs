@@ -10,22 +10,19 @@ public class Player : MonoBehaviour
     [SerializeField] private float _weaponCoolDown = 0.5f;
     [SerializeField] private GameObject[] mainGunObjects;
 
-  
-
-    private int upgradeLevel = 2;
-    
-
-    private Animator _animator;
+    private bool _machineGunActive = false;
 
     private float _nextFireTime = -1;
 
+    private float _startingWeaponCooldown;
+
+    public int upgradeLevel { get; set; }  = 0;
 
    
-
     // Start is called before the first frame update
     void Start()
     {
-        
+        _startingWeaponCooldown = _weaponCoolDown;
 
     }
 
@@ -51,7 +48,14 @@ public class Player : MonoBehaviour
 
                 _nextFireTime = Time.time + _weaponCoolDown;
 
-                Instantiate(mainGunObjects[upgradeLevel], transform.position + Vector3.right, Quaternion.identity);
+                if (_machineGunActive)
+                {
+                    Instantiate(mainGunObjects[3], transform.position + Vector3.right, Quaternion.AngleAxis(90,Vector3.forward));
+                }
+                else
+                {
+                    Instantiate(mainGunObjects[upgradeLevel], transform.position + Vector3.right, Quaternion.identity);
+                }
 
             }
         }
@@ -99,6 +103,24 @@ public class Player : MonoBehaviour
         {
             //harm player
             //if player health - 0 then destroy
+        }
+    }
+
+    public void PowerUp(int powerUpType)
+    {
+        switch(powerUpType)
+        {
+            case 0:  //basic gun upgrade
+                upgradeLevel++;
+                if (upgradeLevel > 2)
+                    upgradeLevel = 2;
+                break;
+            case 1: //machine gun upgrade
+                _machineGunActive = true;
+                _weaponCoolDown = 0.1f;
+                break;
+            default:
+                break;
         }
     }
 }
