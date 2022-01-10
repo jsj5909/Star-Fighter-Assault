@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4400502062458218507}
   - component: {fileID: 4400502062458218505}
   - component: {fileID: 8044518024262224014}
-  - component: {fileID: 3560106568961834850}
+  - component: {fileID: 1988585852}
   m_Layer: 0
   m_Name: Lazer Ray
   m_TagString: PlayerBullet
@@ -114,7 +114,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3560106568961834850
+--- !u!114 &1988585852
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,7 +123,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4400502062458218500}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e03180be7158cb4ab8ea81e0fcb9257, type: 3}
+  m_Script: {fileID: 11500000, guid: 92ab39bbb3065d74fb2abcf148a56387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 20
+  _speed: 17

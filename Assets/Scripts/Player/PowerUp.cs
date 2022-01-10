@@ -6,6 +6,8 @@ public class PowerUp : MonoBehaviour
 {
     [SerializeField] private Sprite [] _powerUps;
     [SerializeField] private float _speed = 3;
+   
+
     
     private Player _player;
 
@@ -61,7 +63,14 @@ public class PowerUp : MonoBehaviour
             _powerUpType = Random.Range(1, _powerUps.Length);
         }
 
+       
+
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
         sr.sprite = _powerUps[_powerUpType];
+
+        if(_powerUpType == 4)  //if its a shield we need to scale it down
+        {
+            transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+        }
     }
 }

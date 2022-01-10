@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,9 +10,13 @@ public class Player : MonoBehaviour
     [SerializeField] private SpriteRenderer _renderer;
     [SerializeField] private float _weaponCoolDown = 0.5f;
     [SerializeField] private GameObject[] mainGunObjects;
+    [SerializeField] private GameObject _beamWeapon;
+    [SerializeField] private GameObject _shields;
 
     private bool _machineGunActive = false;
     private bool _laserRayActive = false;
+    private bool _beamWeaponActive = false;
+    private bool _shieldsActive = false;
 
     private float _nextFireTime = -1;
 
@@ -56,6 +61,10 @@ public class Player : MonoBehaviour
                 else if(_laserRayActive)
                 {
                     Instantiate(mainGunObjects[4], transform.position + Vector3.right, Quaternion.AngleAxis(90,Vector3.forward));
+                }
+                else if(_beamWeaponActive)
+                {
+                    return;
                 }
                 else
                 {
@@ -106,8 +115,15 @@ public class Player : MonoBehaviour
     {
         if(other.tag == "Enemy")
         {
+            Debug.Log("____Hit Enemy___");
+            
             //harm player
             //if player health - 0 then destroy
+            if(_shieldsActive)
+            {
+                DeactivateShields();
+                return;
+            }
         }
     }
 
@@ -130,16 +146,43 @@ public class Player : MonoBehaviour
                 _laserRayActive = true;
                 _weaponCoolDown = 0.3f;
                 break;
+            case 3: //beam weapon
+                ClearPowerUps();
+                ActivateBeam();
+                break;
+            case 4: //shield
+                ActivateShields();
+                break;
             default:
                 break;
         }
+    }
+
+    private void ActivateShields()
+    {
+        _shields.SetActive(true);
+        _shieldsActive = true;
+    }
+
+    private void DeactivateShields()
+    {
+        _shields.SetActive(false);
+        _shieldsActive = false;
     }
 
     private void ClearPowerUps()
     {
         _machineGunActive = false;
         _laserRayActive = false;
+        _beamWeaponActive = false;
+        _beamWeapon.SetActive(false);
 
         _weaponCoolDown = _startingWeaponCooldown;
+    }
+
+    public void ActivateBeam()
+    {
+        _beamWeaponActive = true;
+        _beamWeapon.SetActive(true);
     }
 }
