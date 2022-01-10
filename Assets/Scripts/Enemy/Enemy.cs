@@ -104,7 +104,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            if (upgradeChance < 5)
+            if (upgradeChance < 5)//lower after testing is done
             {
                 Instantiate(_powerUp, transform.position, Quaternion.identity);
             }

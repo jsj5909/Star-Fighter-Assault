@@ -33,4 +33,9 @@ public class StandardBullet : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
+    public void SetSpeed(float speed)
+    {
+        _speed = speed;
+    }
 }

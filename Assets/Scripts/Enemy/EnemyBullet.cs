@@ -47,3 +47,5 @@ public class EnemyBullet : MonoBehaviour
     }
 
 }
+//need a new script for laser ray 
+//it should not destroy after colliding with enemy

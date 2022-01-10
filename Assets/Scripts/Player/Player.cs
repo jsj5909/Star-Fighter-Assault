@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject[] mainGunObjects;
 
     private bool _machineGunActive = false;
+    private bool _laserRayActive = false;
 
     private float _nextFireTime = -1;
 
@@ -51,6 +52,10 @@ public class Player : MonoBehaviour
                 if (_machineGunActive)
                 {
                     Instantiate(mainGunObjects[3], transform.position + Vector3.right, Quaternion.AngleAxis(90,Vector3.forward));
+                }
+                else if(_laserRayActive)
+                {
+                    Instantiate(mainGunObjects[4], transform.position + Vector3.right, Quaternion.AngleAxis(90,Vector3.forward));
                 }
                 else
                 {
@@ -116,11 +121,25 @@ public class Player : MonoBehaviour
                     upgradeLevel = 2;
                 break;
             case 1: //machine gun upgrade
+                ClearPowerUps();
                 _machineGunActive = true;
                 _weaponCoolDown = 0.1f;
+                break;
+            case 2: //laser ray upgrade
+                ClearPowerUps();
+                _laserRayActive = true;
+                _weaponCoolDown = 0.3f;
                 break;
             default:
                 break;
         }
+    }
+
+    private void ClearPowerUps()
+    {
+        _machineGunActive = false;
+        _laserRayActive = false;
+
+        _weaponCoolDown = _startingWeaponCooldown;
     }
 }
