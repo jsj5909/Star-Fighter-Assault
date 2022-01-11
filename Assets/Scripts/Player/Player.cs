@@ -62,10 +62,10 @@ public class Player : MonoBehaviour
                 {
                     Instantiate(mainGunObjects[4], transform.position + Vector3.right, Quaternion.AngleAxis(90,Vector3.forward));
                 }
-                else if(_beamWeaponActive)
-                {
-                    return;
-                }
+                //else if(_beamWeaponActive)
+                //{
+                //    return;
+                //}
                 else
                 {
                     Instantiate(mainGunObjects[upgradeLevel], transform.position + Vector3.right, Quaternion.identity);

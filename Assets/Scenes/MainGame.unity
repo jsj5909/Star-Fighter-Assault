@@ -398,7 +398,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &253315727
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -458,8 +458,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 253315726}
   m_LocalRotation: {x: 0, y: 0, z: 0.99993956, w: 0.010995397}
-  m_LocalPosition: {x: 0.024998786, y: 13.875, z: 0}
-  m_LocalScale: {x: 2.4999998, y: 5.1749997, z: 2.5}
+  m_LocalPosition: {x: 0.26, y: 13.87, z: 0}
+  m_LocalScale: {x: 5.4753747, y: 5.1749997, z: 2.5}
   m_Children: []
   m_Father: {fileID: 466082104}
   m_RootOrder: 1
@@ -475,8 +475,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.2800004, y: 5.1200013, z: 0.2}
-  m_Center: {x: -0.00000023841858, y: -0.000000834465, z: 0}
+  m_Size: {x: 0.23, y: 5.07, z: -0.33}
+  m_Center: {x: -0.01, y: 0.0096264, z: -0.04751739}
 --- !u!54 &253315730
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1112,10 +1112,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d2b2b48fd710f7c45bbbc4471cece8b2, type: 2}
   - {fileID: 11400000, guid: e8e92cf8e4f2f1047ad62a33e010a98d, type: 2}
   - {fileID: 11400000, guid: 02cb69e7b219e4941a2aba5e79bea2d5, type: 2}
+  - {fileID: 11400000, guid: e40af8eae86d9d940b50b1c7456afd3a, type: 2}
+  - {fileID: 11400000, guid: 6fe05ff57ac916a4d991cb3dec7d4eb6, type: 2}
   _bottomRoutes:
   - {fileID: 11400000, guid: 26e49028e8ca50342991faca473f4a34, type: 2}
   - {fileID: 11400000, guid: 5e4aa5a66611ff54cb044c4ee549a24b, type: 2}
   - {fileID: 11400000, guid: 5634904b7f1599641a5fb7377bc9d18d, type: 2}
+  - {fileID: 11400000, guid: e40af8eae86d9d940b50b1c7456afd3a, type: 2}
+  - {fileID: 11400000, guid: 6fe05ff57ac916a4d991cb3dec7d4eb6, type: 2}
 --- !u!4 &1252849765
 Transform:
   m_ObjectHideFlags: 0

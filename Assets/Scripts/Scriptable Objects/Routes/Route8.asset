@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7ddbd568e28ef545af3b861660c4e0d, type: 3}
+  m_Name: Route8
+  m_EditorClassIdentifier: 
+  waypoints:
+  - {fileID: 5260732967187148176, guid: 5b5b4f610445aa942b0f2f12147999ab, type: 3}
+  - {fileID: 123081845677657893, guid: 54dc061f1b11f5c4ead476d91e302b7d, type: 3}
+  - {fileID: 2815703130591343710, guid: 6279d05ba68ef2b459a9aa017b549bb1, type: 3}
+  - {fileID: 3050580876801108995, guid: 6f421b09703ac344785e91a13b2efad8, type: 3}
