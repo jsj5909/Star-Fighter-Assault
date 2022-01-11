@@ -116,7 +116,12 @@ public class Player : MonoBehaviour
         if(other.tag == "Enemy")
         {
             Debug.Log("____Hit Enemy___");
-            
+
+            UI.Instance.ChangePower(-1);
+
+            //if upgrade level < 0 
+            //then player dies
+
             //harm player
             //if player health - 0 then destroy
             if(_shieldsActive)
@@ -133,8 +138,9 @@ public class Player : MonoBehaviour
         {
             case 0:  //basic gun upgrade
                 upgradeLevel++;
-                if (upgradeLevel > 2)
+                if (upgradeLevel >= 2)
                     upgradeLevel = 2;
+                UI.Instance.ChangePower(1);
                 break;
             case 1: //machine gun upgrade
                 ClearPowerUps();
@@ -156,6 +162,7 @@ public class Player : MonoBehaviour
             default:
                 break;
         }
+        
     }
 
     private void ActivateShields()

@@ -15,6 +15,8 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private int _health;
 
+    [SerializeField] private int _points;
+
     private Player _player;
    
     private float _nextShootTime = -1;
@@ -81,6 +83,7 @@ public class Enemy : MonoBehaviour
             _health--;
             if (_health <= 0)
             {
+                UI.Instance.AddScore(_points);
                 WaveManager.Instance.kills++;
 
                 SpawnPowerUp();
@@ -104,7 +107,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            if (upgradeChance < 5)//lower after testing is done
+            if (upgradeChance < 2)//lower after testing is done
             {
                 Instantiate(_powerUp, transform.position, Quaternion.identity);
             }
