@@ -17,6 +17,10 @@ public class Player : MonoBehaviour
     private bool _laserRayActive = false;
     private bool _beamWeaponActive = false;
     private bool _shieldsActive = false;
+    private bool _alive = true;
+    
+    private Animator _animator;
+    private Collider _collider;
 
     private float _nextFireTime = -1;
 
@@ -30,6 +34,13 @@ public class Player : MonoBehaviour
     {
         _startingWeaponCooldown = _weaponCoolDown;
 
+        _animator = GetComponent<Animator>();
+        if (_animator == null)
+            Debug.LogError("Player's animator reference is null");
+        _collider = GetComponent<Collider>();
+        if (_collider == null)
+            Debug.LogError("Player's collider reference is null");
+
     }
 
     //1.5 -7.4
@@ -37,40 +48,45 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Movement();
+        if (_alive)
+        {
+            Movement();
 
-        FireWeapon();
+            FireWeapon();
+        }
     }
 
     private void FireWeapon()
     {
         if (Input.GetKey(KeyCode.Space))
         {
-
-            if (Time.time > _nextFireTime)
+            if (upgradeLevel >= 0)
             {
-
-                Debug.Log("Fire");
-
-                _nextFireTime = Time.time + _weaponCoolDown;
-
-                if (_machineGunActive)
+                if (Time.time > _nextFireTime)
                 {
-                    Instantiate(mainGunObjects[3], transform.position + Vector3.right, Quaternion.AngleAxis(90,Vector3.forward));
-                }
-                else if(_laserRayActive)
-                {
-                    Instantiate(mainGunObjects[4], transform.position + Vector3.right, Quaternion.AngleAxis(90,Vector3.forward));
-                }
-                //else if(_beamWeaponActive)
-                //{
-                //    return;
-                //}
-                else
-                {
-                    Instantiate(mainGunObjects[upgradeLevel], transform.position + Vector3.right, Quaternion.identity);
-                }
 
+                    Debug.Log("Fire");
+
+                    _nextFireTime = Time.time + _weaponCoolDown;
+
+                    if (_machineGunActive)
+                    {
+                        Instantiate(mainGunObjects[3], transform.position + Vector3.right, Quaternion.AngleAxis(90, Vector3.forward));
+                    }
+                    else if (_laserRayActive)
+                    {
+                        Instantiate(mainGunObjects[4], transform.position + Vector3.right, Quaternion.AngleAxis(90, Vector3.forward));
+                    }
+                    //else if(_beamWeaponActive)
+                    //{
+                    //    return;
+                    //}
+                    else
+                    {
+                        Instantiate(mainGunObjects[upgradeLevel], transform.position + Vector3.right, Quaternion.identity);
+                    }
+
+                }
             }
         }
     }
@@ -115,20 +131,27 @@ public class Player : MonoBehaviour
     {
         if(other.tag == "Enemy")
         {
-            Debug.Log("____Hit Enemy___");
-
-            UI.Instance.ChangePower(-1);
-
-            //if upgrade level < 0 
-            //then player dies
-
-            //harm player
-            //if player health - 0 then destroy
-            if(_shieldsActive)
+            if (_shieldsActive)
             {
                 DeactivateShields();
                 return;
             }
+
+
+            
+            upgradeLevel--;
+            UI.Instance.ChangePower(-1);
+            ClearPowerUps();
+
+            if(upgradeLevel<0)
+            {
+                _alive = false;
+                _collider.enabled = false;
+                _animator.SetTrigger("Explode");
+                Destroy(this.gameObject, 2);
+                UI.Instance.GameOver();
+            }
+
         }
     }
 
@@ -138,9 +161,13 @@ public class Player : MonoBehaviour
         {
             case 0:  //basic gun upgrade
                 upgradeLevel++;
-                if (upgradeLevel >= 2)
-                    upgradeLevel = 2;
                 UI.Instance.ChangePower(1);
+                if (upgradeLevel > 2)
+                {
+                    upgradeLevel = 2;
+                    UI.Instance.ChangePower(-1);
+                }
+               
                 break;
             case 1: //machine gun upgrade
                 ClearPowerUps();
@@ -192,4 +219,6 @@ public class Player : MonoBehaviour
         _beamWeaponActive = true;
         _beamWeapon.SetActive(true);
     }
+
+   
 }

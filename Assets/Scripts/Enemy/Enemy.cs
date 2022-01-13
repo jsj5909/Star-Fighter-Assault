@@ -23,7 +23,9 @@ public class Enemy : MonoBehaviour
 
     private int _currentWaypoint = 0;
 
+    private Animator _animator;
 
+    private bool _alive = true;
 
     public EnemyRoute route { get; set; }
 
@@ -32,7 +34,11 @@ public class Enemy : MonoBehaviour
     {
         _player = FindObjectOfType<Player>();
         if (_player == null)
-            Debug.LogError("Player is null");
+            Debug.LogError("Enemy: Player reference is null");
+
+        _animator = GetComponent<Animator>();
+        if (_animator == null)
+            Debug.LogError("Enemy Animator is Null");
     }
 
     // Update is called once per frame
@@ -44,14 +50,16 @@ public class Enemy : MonoBehaviour
 
         Movement();
 
-        if(Time.time > _nextShootTime && (Vector3.Distance(_player.transform.position,transform.position) < 5.0f) && currentBullets<maxBullets)
+        if (_alive && _player != null)
         {
-           
-           Instantiate(_bullet, transform.position, Quaternion.identity);
-            _nextShootTime = Time.time + _weaponCoolDown;
+            if (Time.time > _nextShootTime && (Vector3.Distance(_player.transform.position, transform.position) < 5.0f) && currentBullets < maxBullets)
+            {
 
+                Instantiate(_bullet, transform.position, Quaternion.identity);
+                _nextShootTime = Time.time + _weaponCoolDown;
+
+            }
         }
-       
     }
 
     private void Movement()
@@ -59,21 +67,23 @@ public class Enemy : MonoBehaviour
 
         if (route == null)
             Debug.LogError("Route is Null");
-        
-        if (Vector3.Distance(transform.position, route.waypoints[_currentWaypoint].transform.position) < 1f)
+
+        if (_alive)
         {
-            _currentWaypoint++;
-            if (_currentWaypoint >= route.waypoints.Length)
-                _currentWaypoint = 0;
+            if (Vector3.Distance(transform.position, route.waypoints[_currentWaypoint].transform.position) < 1f)
+            {
+                _currentWaypoint++;
+                if (_currentWaypoint >= route.waypoints.Length)
+                    _currentWaypoint = 0;
 
+            }
+
+            Vector3 direction = (route.waypoints[_currentWaypoint].position - transform.position);
+
+            transform.up = Vector3.Lerp(transform.up, -direction, Time.deltaTime * _speed / 2);
+
+            transform.Translate(Vector3.down * _speed * Time.deltaTime);
         }
-
-        Vector3 direction = (route.waypoints[_currentWaypoint].position - transform.position);
-
-        transform.up = Vector3.Lerp(transform.up, -direction, Time.deltaTime * _speed / 2);
-
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
-
     }
 
     private void OnTriggerEnter(Collider other)
@@ -83,12 +93,15 @@ public class Enemy : MonoBehaviour
             _health--;
             if (_health <= 0)
             {
+                _alive = false;
+                _animator.SetTrigger("Explode");
+
                 UI.Instance.AddScore(_points);
                 WaveManager.Instance.kills++;
 
                 SpawnPowerUp();
 
-                Destroy(this.gameObject);
+                Destroy(this.gameObject,3);
             }
         }
 

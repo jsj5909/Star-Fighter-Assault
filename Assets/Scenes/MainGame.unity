@@ -633,7 +633,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.23, y: 5.07, z: -0.33}
+  m_Size: {x: 0.23, y: 5.07, z: 0.06}
   m_Center: {x: -0.01, y: 0.0096264, z: -0.04751739}
 --- !u!54 &253315730
 Rigidbody:
@@ -692,6 +692,7 @@ GameObject:
   - component: {fileID: 466082103}
   - component: {fileID: 466082105}
   - component: {fileID: 466082106}
+  - component: {fileID: 466082107}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -803,6 +804,25 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.8962967, y: 1.8962967, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &466082107
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 466082102}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e14a38f306bb5d14792b8613dddd696c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!4 &496344858 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3699431641929260035, guid: 3978437ea7c259f44bd50ca718a0ef62, type: 3}
@@ -1165,6 +1185,7 @@ RectTransform:
   - {fileID: 1425435167}
   - {fileID: 155329957}
   - {fileID: 19840831}
+  - {fileID: 1239910175}
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1188,6 +1209,9 @@ MonoBehaviour:
   _scoreText: {fileID: 155329958}
   _powerText: {fileID: 1425435168}
   _waveText: {fileID: 19840832}
+  _restartText: {fileID: 1239910176}
+  _flashTime: 1
+  _checkpointReached: 0
 --- !u!4 &937310773 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 123081845677657893, guid: 54dc061f1b11f5c4ead476d91e302b7d, type: 3}
@@ -1369,6 +1393,88 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 617435190740643918, guid: 22e587bb56508454483939d5a078be62, type: 3}
   m_PrefabInstance: {fileID: 6606246372259318325}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1239910174
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1239910175}
+  - component: {fileID: 1239910177}
+  - component: {fileID: 1239910176}
+  m_Layer: 5
+  m_Name: RestartText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1239910175
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1239910174}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 909119266}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -11, y: -74}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1239910176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1239910174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0, b: 0.91514444, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 82c3fff31ff79c047aedc36c045e6b1a, type: 3}
+    m_FontSize: 24
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 2
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1
+  m_Text: 'R)estart Level
+
+
+    C)heckpoint Restart'
+--- !u!222 &1239910177
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1239910174}
+  m_CullTransparentMesh: 1
 --- !u!1 &1251532204
 GameObject:
   m_ObjectHideFlags: 0
