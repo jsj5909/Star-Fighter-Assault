@@ -6,6 +6,8 @@ using UnityEngine;
 public class EnemyRoute : ScriptableObject
 {
     public Transform[] waypoints;
+    public bool line = false;
 
+    
 
 }

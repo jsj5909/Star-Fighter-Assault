@@ -15,7 +15,9 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private int _health;
 
-    [SerializeField] private int _points;
+    [SerializeField] public int _points;
+
+    [SerializeField] private GameObject _coin;
 
     private Player _player;
    
@@ -27,7 +29,11 @@ public class Enemy : MonoBehaviour
 
     private bool _alive = true;
 
+    private Collider _collider;
+
     public EnemyRoute route { get; set; }
+
+    
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +45,10 @@ public class Enemy : MonoBehaviour
         _animator = GetComponent<Animator>();
         if (_animator == null)
             Debug.LogError("Enemy Animator is Null");
+
+        _collider = GetComponent<Collider>();
+        if (_collider == null)
+            Debug.LogError("Enemy Collider is Null");
     }
 
     // Update is called once per frame
@@ -96,12 +106,18 @@ public class Enemy : MonoBehaviour
                 _alive = false;
                 _animator.SetTrigger("Explode");
 
-                UI.Instance.AddScore(_points);
+                // UI.Instance.AddScore(_points);
+
+                Coin coin = Instantiate(_coin, transform.position, Quaternion.identity).GetComponent<Coin>();
+                coin.value = _points;
+
+                _collider.enabled = false;
+
                 WaveManager.Instance.kills++;
 
                 SpawnPowerUp();
 
-                Destroy(this.gameObject,3);
+                Destroy(this.gameObject,2);
             }
         }
 
