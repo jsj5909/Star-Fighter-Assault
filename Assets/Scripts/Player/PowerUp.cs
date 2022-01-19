@@ -39,30 +39,36 @@ public class PowerUp : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
+        if (_player != null)
         {
-            _player.PowerUp(_powerUpType);
-            Destroy(this.gameObject);
-        }
-        if(other.tag == "Border")
-        {
-            Destroy(this.gameObject);
+            if (other.tag == "Player")
+            {
+                _player.PowerUp(_powerUpType);
+                Destroy(this.gameObject);
+            }
+            if (other.tag == "Border")
+            {
+                Destroy(this.gameObject);
+            }
         }
     }
 
     private void SetPowerUpType()
     {
-        int playersCurrentLevel = _player.upgradeLevel;
-        if (playersCurrentLevel < 2)
+        if (_player != null)
         {
-            _powerUpType = 0;  //basic weapon upgrade
-        }
-        else if(_powerUps.Length > 1)
-        {
-            
-            _powerUpType = Random.Range(1, _powerUps.Length);
-        }
 
+            int playersCurrentLevel = _player.upgradeLevel;
+            if (playersCurrentLevel < 2)
+            {
+                _powerUpType = 0;  //basic weapon upgrade
+            }
+            else if (_powerUps.Length > 1)
+            {
+
+                _powerUpType = Random.Range(1, _powerUps.Length);
+            }
+        }
        
 
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
