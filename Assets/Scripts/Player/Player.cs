@@ -7,7 +7,8 @@ public class Player : MonoBehaviour
 {
     //ship control specifics
     [SerializeField] private float _speed;
-    [SerializeField] private SpriteRenderer _renderer;
+    [SerializeField] private SpriteRenderer _thrusterRenderer;
+
     [SerializeField] private float _weaponCoolDown = 0.5f;
     [SerializeField] private GameObject[] mainGunObjects;
     [SerializeField] private GameObject _beamWeapon;
@@ -21,6 +22,7 @@ public class Player : MonoBehaviour
     
     private Animator _animator;
     private Collider _collider;
+    private SpriteRenderer _renderer;
 
     private float _nextFireTime = -1;
 
@@ -40,6 +42,9 @@ public class Player : MonoBehaviour
         _collider = GetComponent<Collider>();
         if (_collider == null)
             Debug.LogError("Player's collider reference is null");
+        _renderer = GetComponent<SpriteRenderer>();
+        if (_renderer == null)
+            Debug.LogError("Player's sprite renderer reference is null");
 
     }
 
@@ -106,8 +111,8 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             transform.Translate(Vector3.up * _speed * Time.deltaTime);
-            //_animator.SetBool("Thrust", true);
-            _renderer.gameObject.SetActive(true);
+            
+            _thrusterRenderer.gameObject.SetActive(true);
         }
         if (Input.GetKey(KeyCode.A))
         {
@@ -116,7 +121,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.D))
         {
             //_animator.SetBool("Thrust", false);
-            _renderer.gameObject.SetActive(false);
+            _thrusterRenderer.gameObject.SetActive(false);
         }
 
         float clampedYPos = Mathf.Clamp(transform.position.y, -6.2f, 3.0f);
@@ -148,7 +153,10 @@ public class Player : MonoBehaviour
                 _alive = false;
                 _collider.enabled = false;
                 _animator.SetTrigger("Explode");
-                Destroy(this.gameObject, 2);
+                //Destroy(this.gameObject, 2);
+                // _renderer.enabled = false;
+                // _animator.enabled = false;
+               // StartCoroutine(HideSpriteRenderer());
                 UI.Instance.GameOver();
             }
 
@@ -220,5 +228,10 @@ public class Player : MonoBehaviour
         _beamWeapon.SetActive(true);
     }
 
+    IEnumerator HideSpriteRenderer()
+    {
+        yield return new WaitForSeconds(2);
+        _renderer.enabled = false;
+    }
    
 }

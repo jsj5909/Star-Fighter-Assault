@@ -14,7 +14,9 @@ public class BeamBoss : MonoBehaviour
 
     [SerializeField] private int _maxBeams = 10;
 
-    [SerializeField] private float _fiveSpreadShotDelay = 0.5f;
+    [SerializeField] private float _fiveSpreadShotDelay = 5f;
+
+    [SerializeField] private float _missileFireDelay = 0.3f;
 
     [SerializeField] private float _beamDelay = 2.0f;
 
@@ -26,6 +28,7 @@ public class BeamBoss : MonoBehaviour
 
     [SerializeField] private Vector3 _bottom;
 
+    [SerializeField] private int _maxFiredPerType = 20;
     
 
     private Vector3 _destination;
@@ -43,6 +46,9 @@ public class BeamBoss : MonoBehaviour
     private float _nextFireTime = -1;
 
     private int _beamsFired = 0;
+
+    private int _totalFired = 0;
+
     
     
     // Start is called before the first frame update
@@ -72,20 +78,17 @@ public class BeamBoss : MonoBehaviour
                     return;
                 }
             }
-            
-            if(_currentAmmoType == 0)//if shooting the five shot move up and down between firing.
-            {
-                MoveUpAndDown();
-            }
-            else if(_currentAmmoType ==1 ) //beam weapon
-            {
-                MoveUpAndDown();
-            }
+
+            MoveUpAndDown();
             
         }
 
-        if (Time.time > _nextFireTime)
+        //Debug.Log("Game Time:  " + Time.time + " Next Fire Time: " + _nextFireTime);
+
+
+        if (Time.time >= _nextFireTime)
         {
+           
             FireWeapons();
         }
         
@@ -110,8 +113,8 @@ public class BeamBoss : MonoBehaviour
                 }
                 else //moving down
                 {
-                    Debug.Log("Moving Down");
-                    Debug.Log("Distance: " + Vector3.Distance(transform.position, _bottom));
+                    //Debug.Log("Moving Down");
+                   // Debug.Log("Distance: " + Vector3.Distance(transform.position, _bottom));
                     transform.Translate(Vector3.right * _speed * Time.deltaTime);
 
                     if (Vector3.Distance(transform.position, _bottom) < 0.5f)
@@ -134,9 +137,10 @@ public class BeamBoss : MonoBehaviour
 
                 if (_moving == false)
                 {
-                    if (_fiveShotFired >= _fiveShotMax)
+                    if (_totalFired >= _maxFiredPerType)
                     {
                         _moving = true;
+                        _fiveShotFired = 0;
                         
                     }
                     else
@@ -151,13 +155,41 @@ public class BeamBoss : MonoBehaviour
             case 1: //beam weapons
 
                 Instantiate(_ammoTypes[1], transform.position + (Vector3.left * 5), Quaternion.AngleAxis(90, Vector3.forward));
-                _beamsFired++;
+                //_beamsFired++;
                 _nextFireTime = Time.time + _beamDelay;
+                _moving = true;
+                break;
+
+                
+            case 2: //rockets
+
+                GameObject topRocket = Instantiate(_ammoTypes[2], transform.position, Quaternion.AngleAxis(90,Vector3.forward));
+                topRocket.GetComponent<BossMissile>().MoveUp();
+
+                GameObject bottomRocket = Instantiate(_ammoTypes[2], transform.position, Quaternion.AngleAxis(90, Vector3.forward));
+                bottomRocket.GetComponent<BossMissile>().MoveDown();
+
+                _nextFireTime = Time.time + _missileFireDelay;
                 _moving = true;
                 break;
 
             default:
                 break;
+
+              
+
+        }
+        _totalFired++;
+        if(_totalFired >= _maxFiredPerType)
+        {
+            _totalFired = 0;
+            _currentAmmoType++;
+            if(_currentAmmoType > _ammoTypes.Length-1)
+            {
+                Debug.Log("Resetting fire cycle");
+                _currentAmmoType = 0;
+                _moving = false;
+            }
         }
     }
 }
