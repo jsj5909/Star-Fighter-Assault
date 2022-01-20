@@ -1204,6 +1204,7 @@ MonoBehaviour:
   _powerText: {fileID: 1425435168}
   _waveText: {fileID: 19840832}
   _restartText: {fileID: 1239910176}
+  _bossHealthSlider: {fileID: 1287000152}
   _flashTime: 1
   _checkpointReached: 0
 --- !u!4 &937310773 stripped
@@ -1612,7 +1613,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1252849764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1693,7 +1694,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1287000151
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2828,9 +2829,11 @@ GameObject:
   - component: {fileID: 2073152858}
   - component: {fileID: 2073152857}
   - component: {fileID: 2073152859}
+  - component: {fileID: 2073152860}
+  - component: {fileID: 2073152861}
   m_Layer: 0
   m_Name: BOSS_Type2_Judgement
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2927,7 +2930,41 @@ MonoBehaviour:
   _top: {x: 10, y: 0.8, z: 0}
   _bottom: {x: 10, y: -5.58, z: 0}
   _maxFiredPerType: 10
+  _health: 3
+  _renderer: {fileID: 2073152857}
   _currentAmmoType: 0
+--- !u!65 &2073152860
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2073152856}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.5483085, y: 1.3378749, z: 0.2}
+  m_Center: {x: 0.012140274, y: 0.012140214, z: 0}
+--- !u!95 &2073152861
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2073152856}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e14a38f306bb5d14792b8613dddd696c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2083298402
 GameObject:
   m_ObjectHideFlags: 0
@@ -2961,7 +2998,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

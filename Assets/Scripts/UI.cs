@@ -30,7 +30,9 @@ public class UI : MonoBehaviour
     [SerializeField] private Text _powerText;
     [SerializeField] private Text _waveText;
     [SerializeField] private Text _restartText;
+    [SerializeField] private Slider _bossHealthSlider;
     [SerializeField] private float _flashTime = 2f;
+
 
     private int _score = 0;
     private int _power = 0;
@@ -97,5 +99,22 @@ public class UI : MonoBehaviour
             _waveText.gameObject.SetActive(false);
             yield return new WaitForSeconds(_flashTime);
         }
+    }
+
+    public void UpdateBossHealthSlider(int currentHealth)
+    {
+        
+        
+        _bossHealthSlider.value = currentHealth;
+
+        if(_bossHealthSlider.value < 1)
+        {
+            _bossHealthSlider.gameObject.SetActive(false); 
+        }
+    }
+
+    public void SetBossHealthActive()
+    {
+        _bossHealthSlider.gameObject.SetActive(true);
     }
 }

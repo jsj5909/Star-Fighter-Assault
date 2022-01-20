@@ -29,7 +29,12 @@ public class BeamBoss : MonoBehaviour
     [SerializeField] private Vector3 _bottom;
 
     [SerializeField] private int _maxFiredPerType = 20;
-    
+
+    [SerializeField] private int _health = 100;
+
+   
+
+    [SerializeField] private SpriteRenderer _renderer;
 
     private Vector3 _destination;
 
@@ -49,14 +54,22 @@ public class BeamBoss : MonoBehaviour
 
     private int _totalFired = 0;
 
+    private Animator _animator;
     
     
     // Start is called before the first frame update
     void Start()
     {
+        _animator = GetComponent<Animator>();
+        if (_animator == null)
+            Debug.Log("Beam Boss Animator Reference is null");
         _moving = true;
         _destination = _position1;
         _atPos1 = false;
+
+        UI.Instance.SetBossHealthActive();
+        UI.Instance.UpdateBossHealthSlider(_health);
+
     }
 
     // Update is called once per frame
@@ -190,6 +203,24 @@ public class BeamBoss : MonoBehaviour
                 _currentAmmoType = 0;
                 _moving = false;
             }
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "PlayerBullet")
+        {
+            _health--;
+            UI.Instance.UpdateBossHealthSlider(_health);
+            Debug.Log("Health: " + _health);
+
+            if(_health < 1)
+            {
+                _animator.SetTrigger("Explode");
+               
+            }
+
+            Destroy(this.gameObject, 2.1f);
+
         }
     }
 }
