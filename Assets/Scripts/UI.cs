@@ -98,6 +98,8 @@ public class UI : MonoBehaviour
             yield return new WaitForSeconds(_flashTime);
             _waveText.gameObject.SetActive(false);
             yield return new WaitForSeconds(_flashTime);
+            _waveText.gameObject.SetActive(false);
+            yield return new WaitForSeconds(_flashTime);
         }
     }
 
@@ -116,5 +118,27 @@ public class UI : MonoBehaviour
     public void SetBossHealthActive()
     {
         _bossHealthSlider.gameObject.SetActive(true);
+    }
+
+    public void NextWave(int currentWave)
+    { 
+        _waveText.text = "Wave " + currentWave;
+        StartCoroutine(FlashNextWave());
+    }
+
+    IEnumerator FlashNextWave()
+    {
+        _waveText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(_flashTime);
+        _waveText.gameObject.SetActive(false);
+        yield return new WaitForSeconds(_flashTime);
+        _waveText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(_flashTime);
+        _waveText.gameObject.SetActive(false);
+        yield return new WaitForSeconds(_flashTime);
+        _waveText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(_flashTime);
+        _waveText.gameObject.SetActive(false);
+        yield return new WaitForSeconds(_flashTime);
     }
 }

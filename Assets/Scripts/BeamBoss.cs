@@ -87,7 +87,8 @@ public class BeamBoss : MonoBehaviour
                 }
                 else
                 {
-                    transform.Translate(Vector3.down * _speed * Time.deltaTime);
+                    //transform.Translate(Vector3.down * _speed * Time.deltaTime);
+                    transform.position = Vector3.MoveTowards(transform.position, _destination, _speed * Time.deltaTime);
                     return;
                 }
             }
@@ -216,10 +217,13 @@ public class BeamBoss : MonoBehaviour
             if(_health < 1)
             {
                 _animator.SetTrigger("Explode");
-               
+                Destroy(this.gameObject, 2.1f);
+
+                WaveManager.Instance.kills++;
+
             }
 
-            Destroy(this.gameObject, 2.1f);
+           
 
         }
     }
