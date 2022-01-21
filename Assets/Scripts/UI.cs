@@ -124,6 +124,11 @@ public class UI : MonoBehaviour
         _bossHealthSlider.gameObject.SetActive(true);
     }
 
+    public void DisableBossHealth()
+    {
+        _bossHealthSlider.gameObject.SetActive(false);
+    }
+
     public void NextWave(int currentWave)
     { 
         
