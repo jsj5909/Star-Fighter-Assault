@@ -23,6 +23,7 @@ public class SingleSkull : MonoBehaviour
         if(other.tag == "PlayerBullet")
         {
             _boss.Damage();
+            
         }
     }
 

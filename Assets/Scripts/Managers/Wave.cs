@@ -7,7 +7,8 @@ using UnityEngine;
 public class Wave : ScriptableObject
 {
     public int iterations = 1;
-    public bool bossWave = false;
+    public bool beamBoss = false;
+    public bool skullBoss = false;
     
     public GameObject[] topEnemies;
     public GameObject[] bottomEnemies;

@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d54fdaa38f15fcc418eecf2dc69d7ddf, type: 3}
-  m_Name: BossWave
+  m_Name: SkullBossWave
   m_EditorClassIdentifier: 
   iterations: 1
-  beamBoss: 1
-  skullBoss: 0
+  beamBoss: 0
+  skullBoss: 1
   topEnemies:
-  - {fileID: 580054841205229037, guid: b6189953e7bea4a48b920dc52441add4, type: 3}
+  - {fileID: 3844793622513531679, guid: c7b6e3f130622b34c95735b450f99869, type: 3}
   bottomEnemies: []

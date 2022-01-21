@@ -34,6 +34,8 @@ public class UI : MonoBehaviour
     [SerializeField] private float _flashTime = 2f;
     [SerializeField] private Player _player;
 
+    [SerializeField] private Text _debugText;
+
 
     private int _score = 0;
     private int _power = 0;
@@ -52,8 +54,15 @@ public class UI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(_gameOver)
+        if (Input.GetKeyDown(KeyCode.M))
         {
+            if (_debugText.gameObject.activeInHierarchy == false)
+                _debugText.gameObject.SetActive(true);
+            else
+                _debugText.gameObject.SetActive(false);
+        }
+            if (_gameOver)
+            {
             if(Input.GetKeyDown(KeyCode.R))
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -64,6 +73,7 @@ public class UI : MonoBehaviour
                 _waveText.gameObject.SetActive(false);
                 Debug.Log("Restart from checkpoint");
                 _restartText.gameObject.SetActive(false);
+                _gameOver = false;
             }
         }
     }
@@ -88,6 +98,8 @@ public class UI : MonoBehaviour
         _gameOver = true;
         
         _waveText.text = "GAME OVER";
+
+        _bossHealthSlider.gameObject.SetActive(false);
         
         StartCoroutine(FlashGameOver());
 
@@ -96,14 +108,13 @@ public class UI : MonoBehaviour
 
     IEnumerator FlashGameOver()
     {
-        while (true)
+        while (_gameOver == true)
         {
             _waveText.gameObject.SetActive(true);
             yield return new WaitForSeconds(_flashTime);
             _waveText.gameObject.SetActive(false);
             yield return new WaitForSeconds(_flashTime);
-            _waveText.gameObject.SetActive(false);
-            yield return new WaitForSeconds(_flashTime);
+           
         }
     }
 
@@ -142,6 +153,25 @@ public class UI : MonoBehaviour
         StartCoroutine(FlashNextWave());
     }
 
+    public void CheckpointReached()
+    {
+        _debugText.text = "Checkpoint Reached";
+
+        StartCoroutine(FlashCheckpoint());
+    }
+
+
+    IEnumerator FlashCheckpoint()
+    {
+        _debugText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(_flashTime);
+        _debugText.gameObject.SetActive(false); 
+        yield return new WaitForSeconds(_flashTime);
+        _debugText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(_flashTime);
+        _debugText.gameObject.SetActive(false);
+    }
+
     IEnumerator FlashNextWave()
     {
         _waveText.gameObject.SetActive(true);
@@ -152,9 +182,17 @@ public class UI : MonoBehaviour
         yield return new WaitForSeconds(_flashTime);
         _waveText.gameObject.SetActive(false);
         yield return new WaitForSeconds(_flashTime);
+        Debug.Log("---------------Done----------flashing");
       //  _waveText.gameObject.SetActive(true);
       //  yield return new WaitForSeconds(_flashTime);
      //   _waveText.gameObject.SetActive(false);
       //  yield return new WaitForSeconds(_flashTime);
+    }
+
+    
+
+    public void UpdateDebugText(string text)
+    {
+        _debugText.text = text;
     }
 }

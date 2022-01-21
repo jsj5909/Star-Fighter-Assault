@@ -225,6 +225,8 @@ public class BeamBoss : MonoBehaviour
 
                 WaveManager.Instance.kills++;
 
+                GetComponent<Collider>().enabled = false;
+
             }
 
            

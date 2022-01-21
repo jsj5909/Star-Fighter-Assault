@@ -128,10 +128,10 @@ public class WaveManager : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.P))
         {
-            StartNextWave();
+           StartNextWave();
         }
 
-        
+       // UI.Instance.UpdateDebugText("Checkpoint: " + _checkPoint);
 
     }
 
@@ -150,9 +150,13 @@ public class WaveManager : MonoBehaviour
                // Debug.Log("Director Time: " + _director.time);
                 if (_topSpawnCount < _waves[_currentWave].topEnemies.Length)
                 {
-                    if(_waves[_currentWave].bossWave == true)
+                    if(_waves[_currentWave].beamBoss == true)
                     {
                         Instantiate(_waves[_currentWave].topEnemies[_currentEnemy], _spawnPoints[spawnLocation].position, Quaternion.AngleAxis(-90,Vector3.forward));
+                    }
+                    else if(_waves[_currentWave].skullBoss == true)
+                    {
+                        Instantiate(_waves[_currentWave].topEnemies[_currentEnemy], _spawnPoints[spawnLocation].position, Quaternion.identity);
                     }
                     else
                     {
@@ -172,7 +176,7 @@ public class WaveManager : MonoBehaviour
 
                     _bottomSpawnCount++;
                 }
-                _nextSpawnTime = _director.time + _spawnDelay;
+               // _nextSpawnTime = _director.time + _spawnDelay;
                 _currentEnemy++;
 
                 _nextSpawnTime = Time.time + _spawnDelay;
@@ -185,18 +189,21 @@ public class WaveManager : MonoBehaviour
 
     private void StartNextWave()
     {
-
+        Debug.Log("Kills: " + kills + " total Kills: " + _totalKills);
         if (!_gameOver)
         {
-            _currentWave++;
             _spawningPaused = true;
-            SignalWaveStart();
+
+            _totalKills = 0;
+            kills = 0;
+            _currentWave++;
+            
             // _waveComplete = true;
             
             _currentEnemy = 0;
             _topSpawnCount = 0;
             _bottomSpawnCount = 0;
-            kills = 0;
+           
 
             _currentTopRoute = _topRoutes[(Random.Range(0, _topRoutes.Length))];
             _currentBottomRoute = _bottomRoutes[(Random.Range(0, _bottomRoutes.Length))];
@@ -209,16 +216,28 @@ public class WaveManager : MonoBehaviour
             if(_currentWave<_waves.Length - 1)
                 _currentWaveIterations = _waves[_currentWave].iterations;
             _currentIteration = 0;
-            _totalKills = 0;
+           
 
-            if(_currentWave == 5)
+            if(_currentWave == 3)
             {
-                _checkPoint = 5;
+                _checkPoint = 3;
+                //UI.Instance.CheckpointReached();
             }
-            if(_currentWave == 11)
+            if(_currentWave == 6)
             {
-                _checkPoint = 11;
+                _checkPoint = 6;
+               // UI.Instance.CheckpointReached();
             }
+            if(_currentWave == 10)
+            {
+                _checkPoint = 10;
+                //UI.Instance.CheckpointReached();
+            }
+
+          
+            
+            SignalWaveStart();
+          //  UI.Instance.UpdateDebugText("Kills: " + WaveManager.Instance.kills + " Iteration: " + WaveManager.Instance.GetCurrentIteration());
         }
     }
 
@@ -230,7 +249,7 @@ public class WaveManager : MonoBehaviour
    
     IEnumerator PauseForFlash()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
         _spawningPaused = false;
     }
 
@@ -240,5 +259,10 @@ public class WaveManager : MonoBehaviour
 
         StartNextWave();
       
+    }
+
+    public int GetCurrentIteration()
+    {
+        return _currentIteration;
     }
 }

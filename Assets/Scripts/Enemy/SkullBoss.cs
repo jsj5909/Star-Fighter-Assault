@@ -95,6 +95,14 @@ public class SkullBoss : MonoBehaviour
               
             }
             _alive = false;
+
+            WaveManager.Instance.kills++;
+
+            foreach(Collider collider in GetComponentsInChildren<Collider>())
+            {
+                collider.enabled = false;
+            }
+
             Destroy(this.gameObject, 2.1f);
            
         }
