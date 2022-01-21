@@ -143,6 +143,10 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void DestroyEnemyForReset()
+    {
+        Destroy(this.gameObject);
+    }
    
 
 }

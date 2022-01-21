@@ -61,6 +61,7 @@ public class WaveManager : MonoBehaviour
     private int _currentWaveIterations = 1;
     private int _currentIteration = 0;
     private int _totalKills = 0;
+    private int _checkPoint = 0;
 
     
 
@@ -123,6 +124,11 @@ public class WaveManager : MonoBehaviour
                 kills = 0;
             
            
+        }
+
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            StartNextWave();
         }
 
         
@@ -204,6 +210,15 @@ public class WaveManager : MonoBehaviour
                 _currentWaveIterations = _waves[_currentWave].iterations;
             _currentIteration = 0;
             _totalKills = 0;
+
+            if(_currentWave == 5)
+            {
+                _checkPoint = 5;
+            }
+            if(_currentWave == 11)
+            {
+                _checkPoint = 11;
+            }
         }
     }
 
@@ -217,5 +232,13 @@ public class WaveManager : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         _spawningPaused = false;
+    }
+
+    public void StartFromCheckpoint()
+    {
+        _currentWave = _checkPoint-1;
+
+        StartNextWave();
+      
     }
 }

@@ -1236,6 +1236,7 @@ MonoBehaviour:
   _restartText: {fileID: 1239910176}
   _bossHealthSlider: {fileID: 1287000152}
   _flashTime: 1
+  _player: {fileID: 466082105}
   _checkpointReached: 0
 --- !u!4 &937310773 stripped
 Transform:
@@ -1688,10 +1689,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _waves:
   - {fileID: 11400000, guid: 64384f6a2a8fc07448a6fe387e4cf551, type: 2}
-  - {fileID: 11400000, guid: c9e5c1ff03aebee4bb166c8b1e1a5265, type: 2}
   - {fileID: 11400000, guid: 64384f6a2a8fc07448a6fe387e4cf551, type: 2}
-  - {fileID: 11400000, guid: c9e5c1ff03aebee4bb166c8b1e1a5265, type: 2}
+  - {fileID: 11400000, guid: 17adcf0b8a27f17448c2afe809c1d241, type: 2}
+  - {fileID: 11400000, guid: 17adcf0b8a27f17448c2afe809c1d241, type: 2}
   - {fileID: 11400000, guid: cde4386a2b767284dbc5d281f2da7e82, type: 2}
+  - {fileID: 11400000, guid: c9e5c1ff03aebee4bb166c8b1e1a5265, type: 2}
+  - {fileID: 11400000, guid: 17adcf0b8a27f17448c2afe809c1d241, type: 2}
+  - {fileID: 11400000, guid: 17adcf0b8a27f17448c2afe809c1d241, type: 2}
+  - {fileID: 11400000, guid: cde4386a2b767284dbc5d281f2da7e82, type: 2}
+  - {fileID: 11400000, guid: cde4386a2b767284dbc5d281f2da7e82, type: 2}
+  - {fileID: 11400000, guid: 17adcf0b8a27f17448c2afe809c1d241, type: 2}
+  - {fileID: 11400000, guid: c9e5c1ff03aebee4bb166c8b1e1a5265, type: 2}
   _spawnPoint: {fileID: 1604279049}
   _topSpawnPoint: {fileID: 985070524}
   _bottomSpawnPoint: {fileID: 37315661}

@@ -44,6 +44,8 @@ public class BeamBoss : MonoBehaviour
 
     private bool _movingUp = false;
 
+    private bool _alive = true;
+
     private int _fiveShotFired = 0;
 
    [SerializeField] private int _currentAmmoType = 0;
@@ -102,7 +104,7 @@ public class BeamBoss : MonoBehaviour
 
         if (Time.time >= _nextFireTime)
         {
-           
+           if(_alive)
             FireWeapons();
         }
         
@@ -216,6 +218,8 @@ public class BeamBoss : MonoBehaviour
 
             if(_health < 1)
             {
+                _alive = false;
+                
                 _animator.SetTrigger("Explode");
                 Destroy(this.gameObject, 2.1f);
 

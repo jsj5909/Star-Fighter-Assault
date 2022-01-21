@@ -32,6 +32,7 @@ public class UI : MonoBehaviour
     [SerializeField] private Text _restartText;
     [SerializeField] private Slider _bossHealthSlider;
     [SerializeField] private float _flashTime = 2f;
+    [SerializeField] private Player _player;
 
 
     private int _score = 0;
@@ -59,7 +60,10 @@ public class UI : MonoBehaviour
             }
             if(Input.GetKeyDown(KeyCode.C))
             {
-                //reload from checkpoint
+                _player.RestartFromCheckpoint();
+                _waveText.gameObject.SetActive(false);
+                Debug.Log("Restart from checkpoint");
+                _restartText.gameObject.SetActive(false);
             }
         }
     }
@@ -122,7 +126,14 @@ public class UI : MonoBehaviour
 
     public void NextWave(int currentWave)
     { 
-        _waveText.text = "Wave " + currentWave;
+        
+        if(currentWave == 6 || currentWave == 12)
+        {
+            _waveText.text = "Boss Wave";
+        }
+        else
+            _waveText.text = "Wave " + currentWave;
+
         StartCoroutine(FlashNextWave());
     }
 
@@ -136,9 +147,9 @@ public class UI : MonoBehaviour
         yield return new WaitForSeconds(_flashTime);
         _waveText.gameObject.SetActive(false);
         yield return new WaitForSeconds(_flashTime);
-        _waveText.gameObject.SetActive(true);
-        yield return new WaitForSeconds(_flashTime);
-        _waveText.gameObject.SetActive(false);
-        yield return new WaitForSeconds(_flashTime);
+      //  _waveText.gameObject.SetActive(true);
+      //  yield return new WaitForSeconds(_flashTime);
+     //   _waveText.gameObject.SetActive(false);
+      //  yield return new WaitForSeconds(_flashTime);
     }
 }

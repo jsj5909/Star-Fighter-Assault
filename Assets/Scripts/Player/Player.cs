@@ -245,4 +245,33 @@ public class Player : MonoBehaviour
         _renderer.enabled = false;
     }
    
+
+    public void RestartFromCheckpoint()
+    {
+
+        foreach(Enemy enemy in FindObjectsOfType<Enemy>())
+        {
+            enemy.DestroyEnemyForReset();
+        }
+        
+
+        while (upgradeLevel < 0)
+        {
+            upgradeLevel++;
+            UI.Instance.ChangePower(1);
+        }
+            _alive = true;
+        //_collider.enabled = true;
+        StartCoroutine(EnableCollider());
+        _animator.SetTrigger("CheckpointRestart");
+
+        WaveManager.Instance.StartFromCheckpoint();
+        
+    }
+
+    IEnumerator EnableCollider()
+    {
+        yield return new WaitForSeconds(2);
+        _collider.enabled = true;
+    }
 }
