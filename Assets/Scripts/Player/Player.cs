@@ -30,6 +30,7 @@ public class Player : MonoBehaviour
 
     public int upgradeLevel { get; set; }  = 0;
 
+    private bool _noDeath = false;
    
     // Start is called before the first frame update
     void Start()
@@ -124,6 +125,12 @@ public class Player : MonoBehaviour
             _thrusterRenderer.gameObject.SetActive(false);
         }
 
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            _noDeath = !_noDeath;
+            Debug.Log("No Death: " + _noDeath);
+        }
+
         float clampedYPos = Mathf.Clamp(transform.position.y, -6.2f, 3.0f);
         float clampedXpos = Mathf.Clamp(transform.position.x, -3.3f, 3.8f);
         transform.position = new Vector3(clampedXpos, clampedYPos, 0);
@@ -136,30 +143,34 @@ public class Player : MonoBehaviour
     {
         if(other.tag == "Enemy")
         {
-            if (_shieldsActive)
+            if (_noDeath == false)
             {
-                DeactivateShields();
-                return;
+                if (_shieldsActive)
+                {
+                    DeactivateShields();
+                    return;
+                }
+
+
+
+                upgradeLevel--;
+                UI.Instance.ChangePower(-1);
+                ClearPowerUps();
+
+                if (upgradeLevel < 0)
+                {
+
+                    _alive = false;
+                    _collider.enabled = false;
+                    _animator.SetTrigger("Explode");
+                    //Destroy(this.gameObject, 2);
+                    // _renderer.enabled = false;
+                    // _animator.enabled = false;
+                    // StartCoroutine(HideSpriteRenderer());
+                    UI.Instance.GameOver();
+
+                }
             }
-
-
-            
-            upgradeLevel--;
-            UI.Instance.ChangePower(-1);
-            ClearPowerUps();
-
-            if(upgradeLevel<0)
-            {
-                _alive = false;
-                _collider.enabled = false;
-                _animator.SetTrigger("Explode");
-                //Destroy(this.gameObject, 2);
-                // _renderer.enabled = false;
-                // _animator.enabled = false;
-               // StartCoroutine(HideSpriteRenderer());
-                UI.Instance.GameOver();
-            }
-
         }
     }
 
