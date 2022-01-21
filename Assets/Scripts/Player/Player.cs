@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class Player : MonoBehaviour
 {
@@ -13,6 +15,8 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject[] mainGunObjects;
     [SerializeField] private GameObject _beamWeapon;
     [SerializeField] private GameObject _shields;
+
+    [SerializeField] private Volume _ppVolume;
 
     private bool _machineGunActive = false;
     private bool _laserRayActive = false;
@@ -31,6 +35,9 @@ public class Player : MonoBehaviour
     public int upgradeLevel { get; set; }  = 0;
 
     private bool _noDeath = false;
+
+    
+    
    
     // Start is called before the first frame update
     void Start()
@@ -141,10 +148,18 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+       
+        
         if(other.tag == "Enemy")
         {
+
+            StartCoroutine(FlashRed());
+
             if (_noDeath == false)
             {
+                
+                
+                
                 if (_shieldsActive)
                 {
                     DeactivateShields();
@@ -176,6 +191,8 @@ public class Player : MonoBehaviour
 
     public void PowerUp(int powerUpType)
     {
+        StartCoroutine(FlashGreen());
+        
         switch(powerUpType)
         {
             case 0:  //basic gun upgrade
@@ -273,5 +290,24 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         _collider.enabled = true;
+    }
+
+    IEnumerator FlashRed()
+    {
+        _ppVolume.profile.TryGet<ColorAdjustments>(out ColorAdjustments colorValues);
+       
+        colorValues.colorFilter.value = Color.red;
+        yield return new WaitForSeconds(0.2f);
+        colorValues.colorFilter.value = Color.white;
+
+    }
+
+    IEnumerator FlashGreen()
+    {
+        _ppVolume.profile.TryGet<ColorAdjustments>(out ColorAdjustments colorValues);
+
+        colorValues.colorFilter.value = Color.green;
+        yield return new WaitForSeconds(0.2f);
+        colorValues.colorFilter.value = Color.white;
     }
 }
