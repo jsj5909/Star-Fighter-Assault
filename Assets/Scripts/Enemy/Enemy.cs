@@ -31,6 +31,8 @@ public class Enemy : MonoBehaviour
 
     private Collider _collider;
 
+    private SpriteRenderer _renderer;
+
     public EnemyRoute route { get; set; }
 
     
@@ -49,6 +51,10 @@ public class Enemy : MonoBehaviour
         _collider = GetComponent<Collider>();
         if (_collider == null)
             Debug.LogError("Enemy Collider is Null");
+
+        _renderer = GetComponent<SpriteRenderer>();
+        if (_renderer == null)
+            Debug.LogError("Enemy SR is null");
     }
 
     // Update is called once per frame
@@ -101,6 +107,7 @@ public class Enemy : MonoBehaviour
         if(other.tag == "PlayerBullet" || other.tag == "Player")
         {
             _health--;
+            StartCoroutine(FlashDamage());
             if (_health <= 0)
             {
                 _alive = false;
@@ -150,5 +157,11 @@ public class Enemy : MonoBehaviour
         Destroy(this.gameObject);
     }
    
+    IEnumerator FlashDamage()
+    {
+        _renderer.color = Color.red;
+        yield return new WaitForSeconds(0.3f);
+        _renderer.color = Color.white;
+    }
 
 }

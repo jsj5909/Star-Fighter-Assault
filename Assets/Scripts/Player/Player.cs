@@ -266,10 +266,10 @@ public class Player : MonoBehaviour
     public void RestartFromCheckpoint()
     {
 
-        foreach(GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
-        {
-            Destroy(enemy);
-        }
+        //foreach(GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        //{
+        //    Destroy(enemy);
+        //}
 
         
         
