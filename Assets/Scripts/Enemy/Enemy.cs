@@ -115,6 +115,8 @@ public class Enemy : MonoBehaviour
 
                 WaveManager.Instance.kills++;
 
+               // UI.Instance.UpdateDebugText("Kills: " + WaveManager.Instance.kills + " Iteration: " + WaveManager.Instance.GetCurrentIteration());
+
                 SpawnPowerUp();
 
                 Destroy(this.gameObject,2);
@@ -143,6 +145,10 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void DestroyEnemyForReset()
+    {
+        Destroy(this.gameObject);
+    }
    
 
 }

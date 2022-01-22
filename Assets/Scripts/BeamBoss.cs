@@ -44,6 +44,8 @@ public class BeamBoss : MonoBehaviour
 
     private bool _movingUp = false;
 
+    private bool _alive = true;
+
     private int _fiveShotFired = 0;
 
    [SerializeField] private int _currentAmmoType = 0;
@@ -87,7 +89,8 @@ public class BeamBoss : MonoBehaviour
                 }
                 else
                 {
-                    transform.Translate(Vector3.down * _speed * Time.deltaTime);
+                    //transform.Translate(Vector3.down * _speed * Time.deltaTime);
+                    transform.position = Vector3.MoveTowards(transform.position, _destination, _speed * Time.deltaTime);
                     return;
                 }
             }
@@ -101,7 +104,7 @@ public class BeamBoss : MonoBehaviour
 
         if (Time.time >= _nextFireTime)
         {
-           
+           if(_alive)
             FireWeapons();
         }
         
@@ -215,11 +218,18 @@ public class BeamBoss : MonoBehaviour
 
             if(_health < 1)
             {
+                _alive = false;
+                
                 _animator.SetTrigger("Explode");
-               
+                Destroy(this.gameObject, 2.1f);
+
+                WaveManager.Instance.kills++;
+
+                GetComponent<Collider>().enabled = false;
+
             }
 
-            Destroy(this.gameObject, 2.1f);
+           
 
         }
     }

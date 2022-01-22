@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class Player : MonoBehaviour
 {
@@ -13,6 +15,8 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject[] mainGunObjects;
     [SerializeField] private GameObject _beamWeapon;
     [SerializeField] private GameObject _shields;
+
+    [SerializeField] private Volume _ppVolume;
 
     private bool _machineGunActive = false;
     private bool _laserRayActive = false;
@@ -30,6 +34,10 @@ public class Player : MonoBehaviour
 
     public int upgradeLevel { get; set; }  = 0;
 
+    private bool _noDeath = false;
+
+    
+    
    
     // Start is called before the first frame update
     void Start()
@@ -124,6 +132,12 @@ public class Player : MonoBehaviour
             _thrusterRenderer.gameObject.SetActive(false);
         }
 
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            _noDeath = !_noDeath;
+            Debug.Log("No Death: " + _noDeath);
+        }
+
         float clampedYPos = Mathf.Clamp(transform.position.y, -6.2f, 3.0f);
         float clampedXpos = Mathf.Clamp(transform.position.x, -3.3f, 3.8f);
         transform.position = new Vector3(clampedXpos, clampedYPos, 0);
@@ -134,37 +148,51 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+       
+        
         if(other.tag == "Enemy")
         {
-            if (_shieldsActive)
+
+            StartCoroutine(FlashRed());
+
+            if (_noDeath == false)
             {
-                DeactivateShields();
-                return;
+                
+                
+                
+                if (_shieldsActive)
+                {
+                    DeactivateShields();
+                    return;
+                }
+
+
+
+                upgradeLevel--;
+                UI.Instance.ChangePower(-1);
+                ClearPowerUps();
+
+                if (upgradeLevel < 0)
+                {
+
+                    _alive = false;
+                    _collider.enabled = false;
+                    _animator.SetTrigger("Explode");
+                    //Destroy(this.gameObject, 2);
+                    // _renderer.enabled = false;
+                    // _animator.enabled = false;
+                    // StartCoroutine(HideSpriteRenderer());
+                    UI.Instance.GameOver();
+
+                }
             }
-
-
-            
-            upgradeLevel--;
-            UI.Instance.ChangePower(-1);
-            ClearPowerUps();
-
-            if(upgradeLevel<0)
-            {
-                _alive = false;
-                _collider.enabled = false;
-                _animator.SetTrigger("Explode");
-                //Destroy(this.gameObject, 2);
-                // _renderer.enabled = false;
-                // _animator.enabled = false;
-               // StartCoroutine(HideSpriteRenderer());
-                UI.Instance.GameOver();
-            }
-
         }
     }
 
     public void PowerUp(int powerUpType)
     {
+        StartCoroutine(FlashGreen());
+        
         switch(powerUpType)
         {
             case 0:  //basic gun upgrade
@@ -234,4 +262,54 @@ public class Player : MonoBehaviour
         _renderer.enabled = false;
     }
    
+
+    public void RestartFromCheckpoint()
+    {
+
+        foreach(GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            Destroy(enemy);
+        }
+
+        
+        
+
+        while (upgradeLevel < 0)
+        {
+            upgradeLevel++;
+            UI.Instance.ChangePower(1);
+        }
+            _alive = true;
+        //_collider.enabled = true;
+        StartCoroutine(EnableCollider());
+        _animator.SetTrigger("CheckpointRestart");
+
+        WaveManager.Instance.StartFromCheckpoint();
+        
+    }
+
+    IEnumerator EnableCollider()
+    {
+        yield return new WaitForSeconds(2);
+        _collider.enabled = true;
+    }
+
+    IEnumerator FlashRed()
+    {
+        _ppVolume.profile.TryGet<ColorAdjustments>(out ColorAdjustments colorValues);
+       
+        colorValues.colorFilter.value = Color.red;
+        yield return new WaitForSeconds(0.2f);
+        colorValues.colorFilter.value = Color.white;
+
+    }
+
+    IEnumerator FlashGreen()
+    {
+        _ppVolume.profile.TryGet<ColorAdjustments>(out ColorAdjustments colorValues);
+
+        colorValues.colorFilter.value = Color.green;
+        yield return new WaitForSeconds(0.2f);
+        colorValues.colorFilter.value = Color.white;
+    }
 }

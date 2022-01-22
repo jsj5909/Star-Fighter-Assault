@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d54fdaa38f15fcc418eecf2dc69d7ddf, type: 3}
   m_Name: Wave1
   m_EditorClassIdentifier: 
+  iterations: 3
   topEnemies:
   - {fileID: 2026364044714803208, guid: b546d174a5952704c8693dda491c96c6, type: 3}
   - {fileID: 2026364044714803208, guid: b546d174a5952704c8693dda491c96c6, type: 3}
