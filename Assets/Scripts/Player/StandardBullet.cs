@@ -22,7 +22,7 @@ public class StandardBullet : MonoBehaviour
     {
         if(other.tag == "Enemy")
         {
-            
+           
            // Destroy(other.gameObject);
             Destroy(this.gameObject);
             //do this on player
@@ -30,6 +30,8 @@ public class StandardBullet : MonoBehaviour
 
         if(other.tag == "Border")
         {
+           
+
             Destroy(this.gameObject);
         }
     }
