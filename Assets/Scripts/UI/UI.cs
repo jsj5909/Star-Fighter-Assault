@@ -42,7 +42,8 @@ public class UI : MonoBehaviour
     private bool _gameOver = false;
 
     public bool _checkpointReached = false;
-    
+
+    public int checkpointScore;
 
     // Start is called before the first frame update
     void Start()
@@ -74,10 +75,13 @@ public class UI : MonoBehaviour
             }
             if(Input.GetKeyDown(KeyCode.C))
             {
+                _score = checkpointScore;
                 _player.RestartFromCheckpoint();
                 _waveText.gameObject.SetActive(false);
                 Debug.Log("Restart from checkpoint");
                 _restartText.gameObject.SetActive(false);
+                _scoreText.text = "Score: " + _score;
+                
                 _gameOver = false;
             }
         }
@@ -160,9 +164,11 @@ public class UI : MonoBehaviour
 
     public void CheckpointReached()
     {
-        _debugText.text = "Checkpoint Reached";
+        //_debugText.text = "Checkpoint Reached";
 
-        StartCoroutine(FlashCheckpoint());
+        //StartCoroutine(FlashCheckpoint());
+        Debug.Log("Checkpoint Reached, Score: " + _score);
+        checkpointScore = _score;
     }
 
 

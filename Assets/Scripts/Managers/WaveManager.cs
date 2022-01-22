@@ -221,17 +221,17 @@ public class WaveManager : MonoBehaviour
             if(_currentWave == 3)
             {
                 _checkPoint = 3;
-                //UI.Instance.CheckpointReached();
+                UI.Instance.CheckpointReached();
             }
             if(_currentWave == 6)
             {
                 _checkPoint = 6;
-               // UI.Instance.CheckpointReached();
+               UI.Instance.CheckpointReached();
             }
             if(_currentWave == 10)
             {
                 _checkPoint = 10;
-                //UI.Instance.CheckpointReached();
+                UI.Instance.CheckpointReached();
             }
 
           
