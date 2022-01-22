@@ -106,6 +106,7 @@ public class SkullBoss : MonoBehaviour
             _alive = false;
 
             WaveManager.Instance.kills++;
+            UI.Instance.totalKills++;
 
             foreach(Collider collider in GetComponentsInChildren<Collider>())
             {

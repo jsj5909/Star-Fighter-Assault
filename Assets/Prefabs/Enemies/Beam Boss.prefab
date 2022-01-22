@@ -112,8 +112,7 @@ MonoBehaviour:
   _top: {x: 10, y: 0.8, z: 0}
   _bottom: {x: 10, y: -5.58, z: 0}
   _maxFiredPerType: 10
-  _health: 50
-  _renderer: {fileID: 580054841205229036}
+  _health: 125
   _currentAmmoType: 0
 --- !u!65 &580054841205229033
 BoxCollider:

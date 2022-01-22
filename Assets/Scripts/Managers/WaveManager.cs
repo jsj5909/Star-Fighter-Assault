@@ -102,6 +102,12 @@ public class WaveManager : MonoBehaviour
         {
             Debug.Log("GAME WON");
             _gameOver = true;
+
+
+           
+
+            UI.Instance.ShowEndWavePanel();
+
             return;
         }
 
@@ -265,4 +271,6 @@ public class WaveManager : MonoBehaviour
     {
         return _currentIteration;
     }
+
+    
 }

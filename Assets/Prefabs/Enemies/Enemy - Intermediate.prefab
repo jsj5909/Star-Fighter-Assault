@@ -115,7 +115,7 @@ MonoBehaviour:
   _weaponCoolDown: 1.5
   _bullet: {fileID: 6650105031002279810, guid: 4ad78d0912dbde647bd3a692de024cd9, type: 3}
   _powerUp: {fileID: 5330978741450250358, guid: ba4383a0faaf4354eb0d1f825ace4d9c, type: 3}
-  _health: 3
+  _health: 4
   _points: 300
   _coin: {fileID: 6843412082562674742, guid: 8b7aecf61199c904f95b4f834026d603, type: 3}
 --- !u!54 &-620297844832742779

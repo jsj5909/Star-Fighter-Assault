@@ -36,14 +36,26 @@ public class UI : MonoBehaviour
 
     [SerializeField] private Text _debugText;
 
+    [SerializeField] private GameObject _endScenePanel;
+    [SerializeField] private Text _scorePanelText;
+    [SerializeField] private Text _killsText;
+    
+
 
     private int _score = 0;
     private int _power = 0;
+    
+
     private bool _gameOver = false;
 
     public bool _checkpointReached = false;
 
-    public int checkpointScore;
+    private int _checkpointScore;
+
+    public int totalKills = 0;
+
+    private int _checkpointKills = 0;
+
 
     // Start is called before the first frame update
     void Start()
@@ -75,13 +87,13 @@ public class UI : MonoBehaviour
             }
             if(Input.GetKeyDown(KeyCode.C))
             {
-                _score = checkpointScore;
+                _score = _checkpointScore;
                 _player.RestartFromCheckpoint();
                 _waveText.gameObject.SetActive(false);
                 Debug.Log("Restart from checkpoint");
                 _restartText.gameObject.SetActive(false);
                 _scoreText.text = "Score: " + _score;
-                
+                totalKills = _checkpointKills;
                 _gameOver = false;
             }
         }
@@ -168,7 +180,9 @@ public class UI : MonoBehaviour
 
         //StartCoroutine(FlashCheckpoint());
         Debug.Log("Checkpoint Reached, Score: " + _score);
-        checkpointScore = _score;
+        Debug.Log("Total Kills: " + totalKills);
+        _checkpointScore = _score;
+        _checkpointKills = totalKills;
     }
 
 
@@ -200,10 +214,38 @@ public class UI : MonoBehaviour
       //  yield return new WaitForSeconds(_flashTime);
     }
 
-    
+    public void ShowEndWavePanel()
+    {
+        _scorePanelText.text = _score.ToString();
+        _killsText.text = totalKills.ToString();
+        _endScenePanel.SetActive(true);
+    }
 
     public void UpdateDebugText(string text)
     {
         _debugText.text = text;
     }
+
+    public void ContinuePressed()
+    {
+        GetComponent<Animator>().SetTrigger("Fade");
+        StartCoroutine(LoadNextScene());
+    }
+    
+    IEnumerator LoadNextScene()
+    {
+        yield return new WaitForSeconds(0.75f);
+
+        if(SceneManager.GetActiveScene().buildIndex < SceneManager.sceneCountInBuildSettings-1)
+        {
+            //next level
+        }
+        else
+        {
+            //load main menu
+            SceneManager.LoadScene(0);
+        }
+    }
+    
+
 }
