@@ -68,7 +68,7 @@ public class Enemy : MonoBehaviour
 
         if (_alive && _player != null)
         {
-            if (Time.time > _nextShootTime && (Vector3.Distance(_player.transform.position, transform.position) < 5.0f) && currentBullets < maxBullets)
+            if (Time.time > _nextShootTime && (Vector3.Distance(_player.transform.position, transform.position) < 8.0f) && currentBullets < maxBullets)
             {
 
                 Instantiate(_bullet, transform.position, Quaternion.identity);

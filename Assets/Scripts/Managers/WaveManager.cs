@@ -53,7 +53,7 @@ public class WaveManager : MonoBehaviour
     
 
     public int kills { get; set; } = 0;
-    public int maxBullets { get; set; } = 3;
+    public int maxBullets { get; set; } = 8;
     public int currentBullets { get; set; } = 0;
 
     private PlayableDirector _director;
@@ -219,7 +219,7 @@ public class WaveManager : MonoBehaviour
             _director.time = 0f;
             _nextSpawnTime = -1;
             
-            if(_currentWave<_waves.Length - 1)
+            if(_currentWave<_waves.Length)
                 _currentWaveIterations = _waves[_currentWave].iterations;
             _currentIteration = 0;
            
