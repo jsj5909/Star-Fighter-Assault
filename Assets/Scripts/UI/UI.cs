@@ -54,12 +54,17 @@ public class UI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M))
+        //if (Input.GetKeyDown(KeyCode.M))
+        //{
+        //    if (_debugText.gameObject.activeInHierarchy == false)
+        //        _debugText.gameObject.SetActive(true);
+        //    else
+        //        _debugText.gameObject.SetActive(false);
+        //}
+
+        if(Input.GetKeyDown(KeyCode.Backspace))
         {
-            if (_debugText.gameObject.activeInHierarchy == false)
-                _debugText.gameObject.SetActive(true);
-            else
-                _debugText.gameObject.SetActive(false);
+            SceneManager.LoadScene(0);
         }
             if (_gameOver)
             {

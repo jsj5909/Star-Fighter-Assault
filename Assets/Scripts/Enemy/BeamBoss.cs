@@ -34,7 +34,7 @@ public class BeamBoss : MonoBehaviour
 
    
 
-    [SerializeField] private SpriteRenderer _renderer;
+    
 
     private Vector3 _destination;
 
@@ -57,14 +57,20 @@ public class BeamBoss : MonoBehaviour
     private int _totalFired = 0;
 
     private Animator _animator;
-    
-    
+
+    private SpriteRenderer _renderer;
+
     // Start is called before the first frame update
     void Start()
     {
         _animator = GetComponent<Animator>();
         if (_animator == null)
             Debug.Log("Beam Boss Animator Reference is null");
+
+        _renderer = GetComponent<SpriteRenderer>();
+        if (_renderer == null)
+            Debug.Log("BEam Boss renderer reference is null");
+
         _moving = true;
         _destination = _position1;
         _atPos1 = false;
@@ -213,6 +219,9 @@ public class BeamBoss : MonoBehaviour
         if(other.tag == "PlayerBullet")
         {
             _health--;
+
+            StartCoroutine(FlashDamage());
+
             UI.Instance.UpdateBossHealthSlider(_health);
             Debug.Log("Health: " + _health);
 
@@ -233,4 +242,12 @@ public class BeamBoss : MonoBehaviour
 
         }
     }
+
+    IEnumerator FlashDamage()
+    {
+        _renderer.color = Color.red;
+        yield return new WaitForSeconds(0.3f);
+        _renderer.color = Color.white;
+    }
+
 }

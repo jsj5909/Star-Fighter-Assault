@@ -22,11 +22,18 @@ public class SkullBoss : MonoBehaviour
 
     private bool _alive = true;
 
+    private SpriteRenderer[] _renderers;
+
+
     // Start is called before the first frame update
     void Start()
     {
         UI.Instance.SetBossHealthActive();
         UI.Instance.UpdateBossHealthSlider(_health);
+
+        _renderers = GetComponentsInChildren<SpriteRenderer>();
+
+
     }
 
     // Update is called once per frame
@@ -84,7 +91,9 @@ public class SkullBoss : MonoBehaviour
     public void Damage()
     {
         _health--;
-        
+
+        StartCoroutine(FlashDamage());
+
         UI.Instance.UpdateBossHealthSlider(_health);
         
         if (_health < 1)
@@ -107,6 +116,21 @@ public class SkullBoss : MonoBehaviour
            
         }
     }
+    IEnumerator FlashDamage()
+    {
+        foreach(SpriteRenderer sr in _renderers)
+        {
+            sr.color = Color.red;
+        }
+        
+        yield return new WaitForSeconds(0.3f);
 
+        foreach (SpriteRenderer sr in _renderers)
+        {
+            sr.color = Color.white;
+        }
+
+
+    }
 
 }
