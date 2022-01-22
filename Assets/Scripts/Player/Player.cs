@@ -54,6 +54,14 @@ public class Player : MonoBehaviour
         if (_renderer == null)
             Debug.LogError("Player's sprite renderer reference is null");
 
+        //set brightness
+        _ppVolume.profile.TryGet<ColorAdjustments>(out ColorAdjustments colorValues);
+
+
+
+        colorValues.colorFilter.value = Color.white * GameManager.Instance.brightness;
+
+
     }
 
     //1.5 -7.4
@@ -297,10 +305,10 @@ public class Player : MonoBehaviour
     IEnumerator FlashRed()
     {
         _ppVolume.profile.TryGet<ColorAdjustments>(out ColorAdjustments colorValues);
-       
-        colorValues.colorFilter.value = Color.red;
+
+        colorValues.colorFilter.value = Color.red * GameManager.Instance.brightness ;
         yield return new WaitForSeconds(0.2f);
-        colorValues.colorFilter.value = Color.white;
+        colorValues.colorFilter.value = Color.white * GameManager.Instance.brightness;
 
     }
 
@@ -308,8 +316,8 @@ public class Player : MonoBehaviour
     {
         _ppVolume.profile.TryGet<ColorAdjustments>(out ColorAdjustments colorValues);
 
-        colorValues.colorFilter.value = Color.green;
+        colorValues.colorFilter.value = Color.green * GameManager.Instance.brightness;
         yield return new WaitForSeconds(0.2f);
-        colorValues.colorFilter.value = Color.white;
+        colorValues.colorFilter.value = Color.white * GameManager.Instance.brightness;
     }
 }
