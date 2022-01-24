@@ -78,6 +78,8 @@ public class BeamBoss : MonoBehaviour
         if (_audio == null)
             Debug.LogError("Audio reference on enemy is null");
 
+        _audio.volume = GameManager.Instance.volume;
+
         _moving = true;
         _destination = _position1;
         _atPos1 = false;

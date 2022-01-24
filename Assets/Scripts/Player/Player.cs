@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioClip _powerUpSound;
     [SerializeField] private AudioClip _fireSound;
     [SerializeField] private AudioClip _explodeSound;
-    [SerializeField] private AudioClip _coinSound;
+  
    
     [SerializeField] private AudioClip _downGradeSound;
     
@@ -55,6 +55,10 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+       
+       
+
+
         _startingWeaponCooldown = _weaponCoolDown;
 
         _animator = GetComponent<Animator>();
@@ -70,7 +74,7 @@ public class Player : MonoBehaviour
         if (_audio == null)
             Debug.LogError("Audio source reference on Player is null");
 
-  
+        _audio.volume = GameManager.Instance.volume;
 
         //set brightness
         _ppVolume.profile.TryGet<ColorAdjustments>(out ColorAdjustments colorValues);

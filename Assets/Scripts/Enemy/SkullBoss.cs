@@ -44,6 +44,8 @@ public class SkullBoss : MonoBehaviour
         if (_audio == null)
             Debug.LogError("Audio reference on enemy is null");
 
+        _audio.volume = GameManager.Instance.volume;
+
 
 
     }

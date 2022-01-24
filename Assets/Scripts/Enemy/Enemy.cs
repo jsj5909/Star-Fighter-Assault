@@ -65,6 +65,8 @@ public class Enemy : MonoBehaviour
         _audio = GetComponent<AudioSource>();
         if (_audio == null)
             Debug.LogError("Audio reference on enemy is null");
+
+        _audio.volume = GameManager.Instance.volume;
     }
 
     // Update is called once per frame

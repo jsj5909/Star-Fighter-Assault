@@ -17,11 +17,13 @@ public class TitleUI : MonoBehaviour
     [SerializeField] Volume _ppVolume;
 
     [SerializeField] Slider _brightnessSlider;
+    [SerializeField] Slider _volumeSlider;
 
     [SerializeField] GameObject _optionsPanel;
 
 
-    [SerializeField] private AudioSource _audio;
+    [SerializeField] private AudioSource _audioSoundEffects;
+    [SerializeField] private AudioSource _audioMusic;
     [SerializeField] private AudioClip _music;
     [SerializeField] private AudioClip _clickSound;
     
@@ -37,9 +39,7 @@ public class TitleUI : MonoBehaviour
       
 
 
-        if (_audio == null)
-            Debug.LogError("Audio reference on Title UI is Null");
-
+       
        
     }
 
@@ -52,7 +52,7 @@ public class TitleUI : MonoBehaviour
     public void OptionsPressed()
     {
         
-        _audio.PlayOneShot(_clickSound);
+       
         StartCoroutine(ShortDelay());
       
     }
@@ -79,9 +79,22 @@ public class TitleUI : MonoBehaviour
 
     }
 
+    public void VolumeSlider()
+    {
+        GameManager.Instance.volume = _volumeSlider.value;
+
+        _audioMusic.volume = GameManager.Instance.volume / 5;
+        _audioSoundEffects.volume = GameManager.Instance.volume;
+    }
+
     IEnumerator ShortDelay()
     {
         yield return new WaitForSeconds(0.5f);
         _optionsPanel.SetActive(true);
+    }
+
+    public void PlayClick()
+    {
+        _audioSoundEffects.PlayOneShot(_clickSound);
     }
 }

@@ -23,14 +23,14 @@ public class GameManager : MonoBehaviour
     {
         _instance = this;
 
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(this.gameObject);
     }
 
 
 
-    public float brightness = 1;
+    public float brightness;
 
-    public float volume = 1;
+    public float volume;
 
     // Start is called before the first frame update
     void Start()

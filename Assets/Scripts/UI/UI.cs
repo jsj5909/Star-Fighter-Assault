@@ -68,8 +68,9 @@ public class UI : MonoBehaviour
         _scoreText.text = "Score: 0";
         _powerText.text = "Power: 0";
 
+        _audioMusic.volume = GameManager.Instance.volume / 5;
+        _audioSoundEffects.volume = GameManager.Instance.volume;
 
-       
 
     }
 
@@ -104,6 +105,9 @@ public class UI : MonoBehaviour
                 _scoreText.text = "Score: " + _score;
                 totalKills = _checkpointKills;
                 _gameOver = false;
+                _bossHealthSlider.gameObject.SetActive(false);
+
+                _audioMusic.Play();
             }
         }
     }
