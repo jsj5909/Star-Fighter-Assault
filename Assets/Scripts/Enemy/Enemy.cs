@@ -19,6 +19,10 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private GameObject _coin;
 
+    [SerializeField] AudioClip _fireSound;
+    [SerializeField] AudioClip _hitByPlayerSound;
+    [SerializeField] AudioClip _explosionSound;
+
     private Player _player;
    
     private float _nextShootTime = -1;
@@ -32,6 +36,8 @@ public class Enemy : MonoBehaviour
     private Collider _collider;
 
     private SpriteRenderer _renderer;
+
+    private AudioSource _audio;
 
     public EnemyRoute route { get; set; }
 
@@ -55,6 +61,10 @@ public class Enemy : MonoBehaviour
         _renderer = GetComponent<SpriteRenderer>();
         if (_renderer == null)
             Debug.LogError("Enemy SR is null");
+
+        _audio = GetComponent<AudioSource>();
+        if (_audio == null)
+            Debug.LogError("Audio reference on enemy is null");
     }
 
     // Update is called once per frame
@@ -71,6 +81,7 @@ public class Enemy : MonoBehaviour
             if (Time.time > _nextShootTime && (Vector3.Distance(_player.transform.position, transform.position) < 8.0f) && currentBullets < maxBullets)
             {
 
+                _audio.PlayOneShot(_fireSound);
                 Instantiate(_bullet, transform.position, Quaternion.identity);
                 _nextShootTime = Time.time + _weaponCoolDown;
 
@@ -106,10 +117,14 @@ public class Enemy : MonoBehaviour
     {
         if(other.tag == "PlayerBullet" || other.tag == "Player")
         {
+           //_audio.PlayOneShot(_hitByPlayerSound);
+            
             _health--;
             StartCoroutine(FlashDamage());
             if (_health <= 0)
             {
+                _audio.PlayOneShot(_explosionSound);
+
                 _alive = false;
                 _animator.SetTrigger("Explode");
 

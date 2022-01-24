@@ -32,9 +32,12 @@ public class BeamBoss : MonoBehaviour
 
     [SerializeField] private int _health = 100;
 
-   
+    [SerializeField] AudioClip _fireSound;
+    [SerializeField] AudioClip _hitByPlayerSound;
+    [SerializeField] AudioClip _explosionSound;
 
-    
+
+    private AudioSource _audio;
 
     private Vector3 _destination;
 
@@ -70,6 +73,10 @@ public class BeamBoss : MonoBehaviour
         _renderer = GetComponent<SpriteRenderer>();
         if (_renderer == null)
             Debug.Log("BEam Boss renderer reference is null");
+
+        _audio = GetComponent<AudioSource>();
+        if (_audio == null)
+            Debug.LogError("Audio reference on enemy is null");
 
         _moving = true;
         _destination = _position1;
@@ -157,6 +164,8 @@ public class BeamBoss : MonoBehaviour
         {
             case 0://5 spread
 
+                _audio.PlayOneShot(_fireSound);
+
                 if (_moving == false)
                 {
                     if (_totalFired >= _maxFiredPerType)
@@ -176,6 +185,7 @@ public class BeamBoss : MonoBehaviour
 
             case 1: //beam weapons
 
+                _audio.PlayOneShot(_fireSound);
                 Instantiate(_ammoTypes[1], transform.position + (Vector3.left * 5), Quaternion.AngleAxis(90, Vector3.forward));
                 //_beamsFired++;
                 _nextFireTime = Time.time + _beamDelay;
@@ -218,6 +228,8 @@ public class BeamBoss : MonoBehaviour
     {
         if(other.tag == "PlayerBullet")
         {
+            _audio.PlayOneShot(_hitByPlayerSound);
+            
             _health--;
 
             StartCoroutine(FlashDamage());
@@ -227,6 +239,8 @@ public class BeamBoss : MonoBehaviour
 
             if(_health < 1)
             {
+                _audio.PlayOneShot(_explosionSound);
+                
                 _alive = false;
                 
                 _animator.SetTrigger("Explode");

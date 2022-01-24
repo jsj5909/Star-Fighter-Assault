@@ -39,8 +39,13 @@ public class UI : MonoBehaviour
     [SerializeField] private GameObject _endScenePanel;
     [SerializeField] private Text _scorePanelText;
     [SerializeField] private Text _killsText;
-    
 
+
+    [SerializeField] private AudioClip _gameOverSound;
+
+
+   [SerializeField] private AudioSource _audioMusic;
+   [SerializeField] private AudioSource _audioSoundEffects;
 
     private int _score = 0;
     private int _power = 0;
@@ -62,6 +67,10 @@ public class UI : MonoBehaviour
     {
         _scoreText.text = "Score: 0";
         _powerText.text = "Power: 0";
+
+
+       
+
     }
 
     // Update is called once per frame
@@ -116,6 +125,9 @@ public class UI : MonoBehaviour
 
     public void GameOver()
     {
+        _audioSoundEffects.Play();
+        _audioMusic.Stop();
+        
         _gameOver = true;
         
         _waveText.text = "GAME OVER";

@@ -24,6 +24,13 @@ public class SkullBoss : MonoBehaviour
 
     private SpriteRenderer[] _renderers;
 
+    [SerializeField] AudioClip _hitByPlayerSound;
+    [SerializeField] AudioClip _explosionSound;
+
+
+    private AudioSource _audio;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +39,11 @@ public class SkullBoss : MonoBehaviour
         UI.Instance.UpdateBossHealthSlider(_health);
 
         _renderers = GetComponentsInChildren<SpriteRenderer>();
+
+        _audio = GetComponent<AudioSource>();
+        if (_audio == null)
+            Debug.LogError("Audio reference on enemy is null");
+
 
 
     }
@@ -90,6 +102,8 @@ public class SkullBoss : MonoBehaviour
     }
     public void Damage()
     {
+        _audio.PlayOneShot(_hitByPlayerSound);
+        
         _health--;
 
         StartCoroutine(FlashDamage());
@@ -98,6 +112,8 @@ public class SkullBoss : MonoBehaviour
         
         if (_health < 1)
         {
+            _audio.PlayOneShot(_explosionSound);
+            
             foreach(Animator anim in GetComponentsInChildren<Animator>())
             {
                 anim.SetTrigger("Explode");

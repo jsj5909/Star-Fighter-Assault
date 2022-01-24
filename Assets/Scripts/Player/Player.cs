@@ -18,6 +18,19 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Volume _ppVolume;
 
+    [SerializeField] private AudioSource _audio;
+   // [SerializeField] private AudioSource _beamAudio;
+
+    [SerializeField] private AudioClip _powerUpSound;
+    [SerializeField] private AudioClip _fireSound;
+    [SerializeField] private AudioClip _explodeSound;
+    [SerializeField] private AudioClip _coinSound;
+   
+    [SerializeField] private AudioClip _downGradeSound;
+    
+    
+
+
     private bool _machineGunActive = false;
     private bool _laserRayActive = false;
     private bool _beamWeaponActive = false;
@@ -53,6 +66,11 @@ public class Player : MonoBehaviour
         _renderer = GetComponent<SpriteRenderer>();
         if (_renderer == null)
             Debug.LogError("Player's sprite renderer reference is null");
+        _audio = GetComponent<AudioSource>();
+        if (_audio == null)
+            Debug.LogError("Audio source reference on Player is null");
+
+  
 
         //set brightness
         _ppVolume.profile.TryGet<ColorAdjustments>(out ColorAdjustments colorValues);
@@ -85,6 +103,7 @@ public class Player : MonoBehaviour
             {
                 if (Time.time > _nextFireTime)
                 {
+                    _audio.PlayOneShot(_fireSound);
 
                     Debug.Log("Fire");
 
@@ -97,6 +116,7 @@ public class Player : MonoBehaviour
                     else if (_laserRayActive)
                     {
                         Instantiate(mainGunObjects[4], transform.position + Vector3.right, Quaternion.AngleAxis(90, Vector3.forward));
+                        
                     }
                     //else if(_beamWeaponActive)
                     //{
@@ -161,6 +181,7 @@ public class Player : MonoBehaviour
         if(other.tag == "Enemy")
         {
 
+            _audio.PlayOneShot(_downGradeSound);
             StartCoroutine(FlashRed());
 
             if (_noDeath == false)
@@ -170,6 +191,7 @@ public class Player : MonoBehaviour
                 
                 if (_shieldsActive)
                 {
+                    
                     DeactivateShields();
                     return;
                 }
@@ -182,6 +204,7 @@ public class Player : MonoBehaviour
 
                 if (upgradeLevel < 0)
                 {
+                    _audio.PlayOneShot(_explodeSound);
 
                     _alive = false;
                     _collider.enabled = false;
@@ -199,6 +222,8 @@ public class Player : MonoBehaviour
 
     public void PowerUp(int powerUpType)
     {
+        _audio.PlayOneShot(_powerUpSound);
+
         StartCoroutine(FlashGreen());
         
         switch(powerUpType)
@@ -233,6 +258,8 @@ public class Player : MonoBehaviour
             default:
                 break;
         }
+
+       
         
     }
 

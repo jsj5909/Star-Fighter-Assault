@@ -11,9 +11,19 @@ using UnityEngine.Rendering.Universal;
 public class TitleUI : MonoBehaviour
 {
 
+
+    
+
     [SerializeField] Volume _ppVolume;
 
     [SerializeField] Slider _brightnessSlider;
+
+    [SerializeField] GameObject _optionsPanel;
+
+
+    [SerializeField] private AudioSource _audio;
+    [SerializeField] private AudioClip _music;
+    [SerializeField] private AudioClip _clickSound;
     
     // Start is called before the first frame update
     void Start()
@@ -23,8 +33,14 @@ public class TitleUI : MonoBehaviour
 
         _brightnessSlider.value = 1;
 
-        
 
+      
+
+
+        if (_audio == null)
+            Debug.LogError("Audio reference on Title UI is Null");
+
+       
     }
 
     // Update is called once per frame
@@ -33,6 +49,13 @@ public class TitleUI : MonoBehaviour
         
     }
 
+    public void OptionsPressed()
+    {
+        
+        _audio.PlayOneShot(_clickSound);
+        StartCoroutine(ShortDelay());
+      
+    }
 
     public void StartGame()
     {
@@ -54,5 +77,11 @@ public class TitleUI : MonoBehaviour
 
         GameManager.Instance.brightness = _brightnessSlider.value;
 
+    }
+
+    IEnumerator ShortDelay()
+    {
+        yield return new WaitForSeconds(0.5f);
+        _optionsPanel.SetActive(true);
     }
 }
